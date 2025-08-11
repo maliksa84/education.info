@@ -1,92 +1,127 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ur" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Punjab Results 2025</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background: #f4f4f4;
-        color: #333;
-        text-align: center;
-        margin: 0;
-        padding: 0;
-    }
-    header {
-        background: #008000;
-        color: white;
-        padding: 15px;
-    }
-    h1, h2, h3 {
-        margin: 10px 0;
-    }
-    .container {
-        padding: 20px;
-    }
-    .btn {
-        display: inline-block;
-        background: #006400;
-        color: white;
-        padding: 10px 20px;
-        margin: 10px;
-        border-radius: 5px;
-        cursor: pointer;
-        text-decoration: none;
-    }
-    .btn:hover {
-        background: #004d00;
-    }
-    #board-selection {
-        margin-top: 20px;
-        display: none;
-    }
-    select {
-        padding: 8px;
-        font-size: 16px;
-    }
-    #result-link {
-        display: none;
-        margin-top: 15px;
-        padding: 10px 20px;
-        background: #004d00;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-        cursor: pointer;
-        display: inline-block;
-    }
-    footer {
-        background: #222;
-        color: #ccc;
-        padding: 10px;
-        margin-top: 20px;
-    }
-</style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>9th, 10th, Matric & Intermediate Result 2025 Punjab - Online Check</title>
+    <meta name="description" content="9th class result, 10th class result, matric and intermediate results 2025 Punjab boards online check کریں۔ سب سے پہلے اور آسان طریقہ۔" />
+    <meta name="keywords" content="9th class result 2025, 10th class result 2025, matric result 2025, intermediate result 2025, Punjab board result, online result check" />
+    <meta name="author" content="Punjab Results" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            background: #008000;
+            color: white;
+            padding: 15px;
+        }
+        h1, h2, h3 {
+            margin: 10px 0;
+        }
+        .container {
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: right;
+            direction: rtl;
+        }
+        .btn {
+            display: inline-block;
+            background: #006400;
+            color: white;
+            padding: 10px 20px;
+            margin: 10px 7px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background: #004d00;
+        }
+        #board-selection {
+            margin-top: 25px;
+            display: none;
+            text-align: right;
+        }
+        select {
+            padding: 8px;
+            font-size: 16px;
+            width: 100%;
+            max-width: 320px;
+            direction: ltr;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        #result-link {
+            display: none;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #004d00;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 16px;
+        }
+        .info-box {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px 20px;
+            margin: 30px auto;
+            max-width: 700px;
+            border: 1px solid #ffeeba;
+            border-radius: 6px;
+            font-size: 16px;
+            text-align: right;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .info-box ul {
+            padding-left: 20px;
+            margin: 10px 0;
+            list-style-type: disc;
+            text-align: right;
+        }
+        footer {
+            background: #222;
+            color: #ccc;
+            padding: 10px;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
 
 <header>
     <h1>Punjab Results 2025</h1>
-    <p>Check results from all schools and boards of Punjab</p>
+    <p>پنجاب کے تمام اسکولوں اور بورڈز کے رزلٹ سب سے پہلے</p>
 </header>
 
 <div class="container">
-    <h2>Check Your Result</h2>
+
+    <h2>اپنا رزلٹ چیک کریں</h2>
 
     <div>
-        <a href="#" class="btn" onclick="showBoardSelection('matric')">Matric 2025 Result</a>
-        <a href="#" class="btn" onclick="showBoardSelection('intermediate')">Intermediate 2025 Result</a>
-        <a href="#" class="btn" onclick="showBoardSelection('class9')">Class 9 Result</a>
-        <a href="#" class="btn" onclick="showBoardSelection('class10')">Class 10 Result</a>
-        <a href="#" class="btn" onclick="showBoardSelection('firstYear')">First Year Result</a>
-        <a href="#" class="btn" onclick="showBoardSelection('secondYear')">Second Year Result</a>
+        <a href="#" class="btn" onclick="showBoardSelection('matric')">میٹرک 2025 رزلٹ</a>
+        <a href="#" class="btn" onclick="showBoardSelection('intermediate')">انٹرمیڈیٹ 2025 رزلٹ</a>
+        <a href="#" class="btn" onclick="showBoardSelection('class9')">نویں کلاس رزلٹ</a>
+        <a href="#" class="btn" onclick="showBoardSelection('class10')">دسویں کلاس رزلٹ</a>
+        <a href="#" class="btn" onclick="showBoardSelection('firstYear')">پہلا سال رزلٹ</a>
+        <a href="#" class="btn" onclick="showBoardSelection('secondYear')">دوسرا سال رزلٹ</a>
     </div>
 
     <div id="board-selection">
-        <h3>Select Board:</h3>
+        <h3>بورڈ منتخب کریں:</h3>
         <select id="board-dropdown" onchange="updateResultLink()">
-            <option value="">-- Select Board --</option>
+            <option value="">-- بورڈ منتخب کریں --</option>
             <option value="biseLahore">BISE Lahore</option>
             <option value="biseGujranwala">BISE Gujranwala</option>
             <option value="biseRawalpindi">BISE Rawalpindi</option>
@@ -95,72 +130,21 @@
             <option value="biseMultan">BISE Multan</option>
             <option value="biseBahawalpur">BISE Bahawalpur</option>
         </select>
-
         <br />
-
-        <a id="result-link" href="#" target="_blank">View Result</a>
+        <a id="result-link" href="#" target="_blank">رزلٹ دیکھیں</a>
     </div>
-</div>
 
-<script>
-    let currentClass = "";
+    <div class="info-box">
+        <strong>رزلٹ کے بارے میں اہم معلومات:</strong>
+        <ul>
+            <li>پنجاب کے بورڈز کا میٹرک اور انٹرمیڈیٹ رزلٹ عام طور پر جون یا جولائی میں جاری ہوتا ہے۔ تازہ ترین اپڈیٹس کے لیے ہماری ویب سائٹ چیک کرتے رہیں۔</li>
+            <li>رزلٹ چیک کرنے کے لیے اپنا رول نمبر اور بورڈ منتخب کریں۔</li>
+            <li>اگر رزلٹ میں کوئی غلطی نظر آئے تو فوراً متعلقہ بورڈ یا سکول سے رابطہ کریں۔</li>
+            <li>اگر آپ رزلٹ سے مطمئن نہیں تو ری چیکنگ یا اپیل کے لیے متعلقہ بورڈ کی ہدایات دیکھیں۔</li>
+            <li>اگر ویب سائٹ پر رزلٹ نہ آئے تو کچھ دیر بعد دوبارہ کوشش کریں یا قریبی تعلیمی ادارے سے رابطہ کریں۔</li>
+            <li>رزلٹ دیکھنے کے بعد اسے پرنٹ کر لیں تاکہ آپ کے پاس محفوظ ریکارڈ رہے۔</li>
+            <li>ہماری ویب سائٹ آپ کو براہِ راست آفیشل بورڈ کی سائٹس پر لے جاتی ہے تاکہ آپ کا ڈیٹا محفوظ اور درست رہے۔</li>
+        </ul>
+        <em>ہم آپ کی سہولت کے لیے
 
-    function showBoardSelection(className) {
-        currentClass = className;
-        document.getElementById('board-selection').style.display = 'block';
-        document.getElementById('board-dropdown').value = "";
-        const resultLink = document.getElementById('result-link');
-        resultLink.style.display = 'none';
-        resultLink.href = "#";
-    }
-
-    function updateResultLink() {
-        const board = document.getElementById('board-dropdown').value;
-        const link = document.getElementById('result-link');
-
-        if (!board) {
-            link.style.display = 'none';
-            link.href = "#";
-            return;
-        }
-
-        let url = "";
-
-        // Official board result pages - direct to result input page
-        if (
-            currentClass === "matric" ||
-            currentClass === "intermediate" ||
-            currentClass === "class9" ||
-            currentClass === "class10" ||
-            currentClass === "firstYear" ||
-            currentClass === "secondYear"
-        ) {
-            if (board === "biseLahore") url = "https://www.biselahore.com/result/";
-            else if (board === "biseGujranwala") url = "https://www.bisegrw.com/result/";
-            else if (board === "biseRawalpindi") url = "https://www.biserwp.edu.pk/result/";
-            else if (board === "biseFaisalabad") url = "https://www.bisefsd.edu.pk/result/";
-            else if (board === "biseSahiwal") url = "https://www.bisesahiwal.edu.pk/result/";
-            else if (board === "biseMultan") url = "https://www.bisemultan.edu.pk/result/";
-            else if (board === "biseBahawalpur") url = "https://www.bisebwp.edu.pk/result/";
-            else url = "#";
-        } else {
-            url = "#";
-        }
-
-        if (url === "#") {
-            link.style.display = 'none';
-            link.href = "#";
-        } else {
-            link.href = url;
-            link.style.display = 'inline-block';
-        }
-    }
-</script>
-
-<footer>
-    <p>© 2025 PunjabResults.com - All rights reserved</p>
-</footer>
-
-</body>
-</html>
 
