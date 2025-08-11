@@ -134,6 +134,13 @@
         <a id="result-link" href="#" target="_blank">رزلٹ دیکھیں</a>
     </div>
 
+    <!-- TikTok Buy Button -->
+    <div style="margin-top: 30px;">
+        <a href="https://wa.me/923028647505" target="_blank" class="btn" style="background:#25D366;">
+            Buy TikTok UK and USA Accounts
+        </a>
+    </div>
+
     <div class="info-box">
         <strong>رزلٹ کے بارے میں اہم معلومات:</strong>
         <ul>
@@ -144,7 +151,70 @@
             <li>اگر ویب سائٹ پر رزلٹ نہ آئے تو کچھ دیر بعد دوبارہ کوشش کریں یا قریبی تعلیمی ادارے سے رابطہ کریں۔</li>
             <li>رزلٹ دیکھنے کے بعد اسے پرنٹ کر لیں تاکہ آپ کے پاس محفوظ ریکارڈ رہے۔</li>
             <li>ہماری ویب سائٹ آپ کو براہِ راست آفیشل بورڈ کی سائٹس پر لے جاتی ہے تاکہ آپ کا ڈیٹا محفوظ اور درست رہے۔</li>
+            <li><strong>TikTok UK اور USA Accounts دستیاب ہیں، صرف اسٹوڈنٹ آفر: 499 روپے میں!</strong></li>
         </ul>
-        <em>ہم آپ کی سہولت کے لیے
+        <em>ہم آپ کی سہولت کے لیے ہمیشہ کوشاں ہیں کہ آپ کا رزلٹ آسانی سے اور جلدی حاصل ہو۔</em>
+    </div>
 
+</div>
 
+<script>
+    let currentClass = "";
+
+    function showBoardSelection(className) {
+        currentClass = className;
+        document.getElementById('board-selection').style.display = 'block';
+        document.getElementById('board-dropdown').value = "";
+        const resultLink = document.getElementById('result-link');
+        resultLink.style.display = 'none';
+        resultLink.href = "#";
+    }
+
+    function updateResultLink() {
+        const board = document.getElementById('board-dropdown').value;
+        const link = document.getElementById('result-link');
+
+        if (!board) {
+            link.style.display = 'none';
+            link.href = "#";
+            return;
+        }
+
+        let url = "";
+
+        if (
+            currentClass === "matric" ||
+            currentClass === "intermediate" ||
+            currentClass === "class9" ||
+            currentClass === "class10" ||
+            currentClass === "firstYear" ||
+            currentClass === "secondYear"
+        ) {
+            if (board === "biseLahore") url = "https://www.biselahore.com/result/";
+            else if (board === "biseGujranwala") url = "https://www.bisegrw.com/result/";
+            else if (board === "biseRawalpindi") url = "https://www.biserwp.edu.pk/result/";
+            else if (board === "biseFaisalabad") url = "https://www.bisefsd.edu.pk/result/";
+            else if (board === "biseSahiwal") url = "https://www.bisesahiwal.edu.pk/result/";
+            else if (board === "biseMultan") url = "https://www.bisemultan.edu.pk/result/";
+            else if (board === "biseBahawalpur") url = "https://www.bisebwp.edu.pk/result/";
+            else url = "#";
+        } else {
+            url = "#";
+        }
+
+        if (url === "#") {
+            link.style.display = 'none';
+            link.href = "#";
+        } else {
+            link.href = url;
+            link.style.display = 'inline-block';
+        }
+    }
+</script>
+
+<footer>
+    <p>© 2025 PunjabResults.com - تمام حقوق محفوظ ہیں</p>
+</footer>
+
+</body>
+</html>
