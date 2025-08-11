@@ -1,20 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Punjab Results 2025</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        color: #333;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+    header {
+        background: #008000;
+        color: white;
+        padding: 15px;
+    }
+    h1, h2, h3 {
+        margin: 10px 0;
+    }
+    .container {
+        padding: 20px;
+    }
+    .btn {
+        display: inline-block;
+        background: #006400;
+        color: white;
+        padding: 10px 20px;
+        margin: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    .btn:hover {
+        background: #004d00;
+    }
+    #board-selection {
+        margin-top: 20px;
+        display: none;
+    }
+    select {
+        padding: 8px;
+        font-size: 16px;
+    }
+    #result-link {
+        display: none;
+        margin-top: 15px;
+        padding: 10px 20px;
+        background: #004d00;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        cursor: pointer;
+        display: inline-block;
+    }
+    footer {
+        background: #222;
+        color: #ccc;
+        padding: 10px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
 
-if (currentClass === "matric") {
-    if (board === "biseLahore") url = "https://www.biselahore.com/result/";
-    else if (board === "biseGujranwala") url = "https://www.bisegrw.com/result/";
-    else if (board === "biseRawalpindi") url = "https://www.biserwp.edu.pk/result/";
-    else if (board === "biseFaisalabad") url = "https://www.bisefsd.edu.pk/result/";
-    else if (board === "biseSahiwal") url = "https://www.bisesahiwal.edu.pk/result/";
-    else if (board === "biseMultan") url = "https://www.bisemultan.edu.pk/result/";
-    else if (board === "biseBahawalpur") url = "https://www.bisebwp.edu.pk/result/";
-} else if (currentClass === "intermediate") {
-    if (board === "biseLahore") url = "https://www.biselahore.com/result/";
-    else if (board === "biseGujranwala") url = "https://www.bisegrw.com/result/";
-    else if (board === "biseRawalpindi") url = "https://www.biserwp.edu.pk/result/";
-    else if (board === "biseFaisalabad") url = "https://www.bisefsd.edu.pk/result/";
-    else if (board === "biseSahiwal") url = "https://www.bisesahiwal.edu.pk/result/";
-    else if (board === "biseMultan") url = "https://www.bisemultan.edu.pk/result/";
-    else if (board === "biseBahawalpur") url = "https://www.bisebwp.edu.pk/result/";
-} else {
-    url = "#";
-}
+<header>
+    <h1>Punjab Results 2025</h1>
+    <p>Check results from all schools and boards of Punjab</p>
+</header>
+
+<div class="container">
+    <h2>Check Your Result</h2>
+
+    <div>
+        <a href="#" class="btn" onclick="showBoardSelection('matric')">Matric 2025 Result</a>
+        <a href="#" class="btn" onclick="showBoardSelection('intermediate')">Intermediate 2025 Result</a>
+        <a href="#" class="btn" onclick="showBoardSelection('class9')">Class 9 Result</a>
+        <a href="#" class="btn" onclick="showBoardSelection('class10')">Class 10 Result</a>
+        <a href="#" class="btn" onclick="showBoardSelection('firstYear')">First Year Result</a>
+        <a href="#" class="btn" onclick="showBoardSelection('secondYear')">Second Year Result</a>
+    </div>
+
+    <div id="board-selection">
+        <h3>Select Board:</h3>
+        <select id="board-dropdown" onchange="updateResultLink()">
+            <option value="">-- Select Board --</option>
+            <option value="biseLahore">BISE Lahore</option>
+            <option value="biseGujranwala">BISE Gujranwala</option>
+            <option value="biseRawalpindi">BISE Rawalpindi</option>
+            <option value="biseFaisalabad">BISE Faisalabad</option>
+            <option value="biseSahiwal">BISE Sahiwal</option>
+            <option value="biseMultan">BISE Multan</option>
+            <option value="biseBahawalpur">BISE Bahawalpur</option>
+        </select>
+
+        <br />
+
+        <a id="result-link" href="#" target="_blank">View Result</a>
+    </div>
+</div>
+
+<script>
+    let currentClass = "";
+
+    function showBoardSelection(className) {
+        currentClass = className;
+        document.getElementById('board-selection').style.display = 'block';
+        document.getElementById('board-dropdown').value = "";
+        const resultLink = document.getElementById('result-link');
+        resultLink.style.display = 'none';
+        resultLink.href = "#";
+    }
+
+    function updateResultLink() {
+        const board = document.getElementById('board-dropdown').value;
+        const link = document.getElementById('result-link');
+
+        if (!board) {
+            link.style.display = 'none';
+            link.href = "#";
+            return;
+        }
+
+        let url = "";
+
+        // Official board result pages - direct to result input page
+        if (
+            currentClass === "matric" ||
+            currentClass === "intermediate" ||
+            currentClass === "class9" ||
+            currentClass === "class10" ||
+            currentClass === "firstYear" ||
+            currentClass === "secondYear"
+        ) {
+            if (board === "biseLahore") url = "https://www.biselahore.com/result/";
+            else if (board === "biseGujranwala") url = "https://www.bisegrw.com/result/";
+            else if (board === "biseRawalpindi") url = "https://www.biserwp.edu.pk/result/";
+            else if (board === "biseFaisalabad") url = "https://www.bisefsd.edu.pk/result/";
+            else if (board === "biseSahiwal") url = "https://www.bisesahiwal.edu.pk/result/";
+            else if (board === "biseMultan") url = "https://www.bisemultan.edu.pk/result/";
+            else if (board === "biseBahawalpur") url = "https://www.bisebwp.edu.pk/result/";
+            else url = "#";
+        } else {
+            url = "#";
+        }
+
+        if (url === "#") {
+            link.style.display = 'none';
+            link.href = "#";
+        } else {
+            link.href = url;
+            link.style.display = 'inline-block';
+        }
+    }
+</script>
+
+<footer>
+    <p>© 2025 PunjabResults.com - All rights reserved</p>
+</footer>
+
+</body>
+</html>
+
