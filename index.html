@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Punjab Results 2025</title>
+<style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; color: #333; text-align: center; margin: 0; }
+    header { background: #008000; color: white; padding: 15px; }
+    h1, h2 { margin: 10px 0; }
+    .container { padding: 20px; }
+    .btn {
+        display: inline-block;
+        background: #006400;
+        color: white;
+        padding: 10px 20px;
+        margin: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    .btn:hover { background: #004d00; }
+    #board-selection {
+        margin-top: 20px;
+        display: none;
+    }
+    select {
+        padding: 8px;
+        font-size: 16px;
+    }
+    #result-link {
+        display: none;
+        margin-top: 15px;
+        padding: 10px 20px;
+        background: #004d00;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Punjab Results 2025</h1>
+    <p>پنجاب کے تمام اسکولوں اور بورڈز کے رزلٹ سب سے پہلے</p>
+</header>
+
+<div class="container">
+    <h2>اپنا رزلٹ چیک کریں</h2>
+
+    <div>
+        <a href="#" class="btn" onclick="showBoardSelection('matric')">میٹرک 2025 رزلٹ</a>
+        <a href="#" class="btn" onclick="showBoardSelection('intermediate')">انٹرمیڈیٹ 2025 رزلٹ</a>
+        <a href="#" class="btn" onclick="showBoardSelection('class9')">نویں کلاس رزلٹ</a>
+        <a href="#" class="btn" onclick="showBoardSelection('class10')">دسویں کلاس رزلٹ</a>
+        <a href="#" class="btn" onclick="showBoardSelection('firstYear')">پہلا سال رزلٹ</a>
+        <a href="#" class="btn" onclick="showBoardSelection('secondYear')">دوسرا سال رزلٹ</a>
+    </div>
+
+    <div id="board-selection">
+        <h3>بورڈ منتخب کریں:</h3>
+        <select id="board-dropdown" onchange="updateResultLink()">
+            <option value="">-- بورڈ منتخب کریں --</option>
+            <option value="biseLahore">BISE Lahore</option>
+            <option value="biseGujranwala">BISE Gujranwala</option>
+            <option value="biseRawalpindi">BISE Rawalpindi</option>
+            <option value="biseFaisalabad">BISE Faisalabad</option>
+            <option value="biseSahiwal">BISE Sahiwal</option>
+            <option value="biseMultan">BISE Multan</option>
+            <option value="biseBahawalpur">BISE Bahawalpur</option>
+        </select>
+
+        <br />
+
+        <a id="result-link" href="#" target="_blank">رزلٹ دیکھیں</a>
+    </div>
+</div>
+
+<script>
+    let currentClass = "";
+
+    function showBoardSelection(className) {
+        currentClass = className;
+        document.getElementById('board-selection').style.display = 'block';
+        document.getElementById('board-dropdown').value = "";
+        document.getElementById('result-link').style.display = 'none';
+        document.getElementById('result-link').href = "#";
+    }
+
+    function updateResultLink() {
+        const board = document.getElementById('board-dropdown').value;
+        const link = document.getElementById('result-link');
+
+        if (!board) {
+            link.style.display = 'none';
+            link.href = "#";
+            return;
+        }
+
+        // یہاں ہر کلاس اور بورڈ کے حساب سے صحیح رزلٹ کا لنک بنائیں
+        // مثال کے طور پر فرضی لنکس بنائے گئے ہیں:
+
+        let url = "";
+
+        if (currentClass === "matric") {
+            url = `results/2025/matric/${board}.html`;
+        } else if (currentClass === "intermediate") {
+            url = `results/2025/intermediate/${board}.html`;
+        } else if (currentClass === "class9") {
+            url = `results/2025/class9/${board}.html`;
+        } else if (currentClass === "class10") {
+            url = `results/2025/class10/${board}.html`;
+        } else if (currentClass === "firstYear") {
+            url = `results/2025/firstYear/${board}.html`;
+        } else if (currentClass === "secondYear") {
+            url = `results/2025/secondYear/${board}.html`;
+        }
+
+        link.href = url;
+        link.style.display = "inline-block";
+    }
+</script>
+
+<footer style="background:#222;color:#ccc;padding:10px;margin-top:20px;">
+    <p>© 2025 PunjabResults.com - تمام حقوق محفوظ ہیں</p>
+</footer>
+
+</body>
+</html>
