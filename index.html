@@ -3,91 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Punjab Results & TikTok Accounts</title>
+    <title>Pakistan Board Results</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f9f9f9;
             text-align: center;
+            padding: 30px;
+            background: #f4f4f4;
         }
-        header {
-            background: #2c3e50;
-            color: white;
-            padding: 15px;
-            font-size: 22px;
-        }
-        .container {
-            margin: 20px;
+        select, input, button {
+            padding: 10px;
+            margin: 8px;
+            font-size: 16px;
         }
         button {
-            padding: 10px 20px;
-            font-size: 16px;
-            margin: 8px;
-            background: #3498db;
+            background-color: #28a745;
             color: white;
             border: none;
             cursor: pointer;
-            border-radius: 5px;
         }
         button:hover {
-            background: #2980b9;
-        }
-        .instructions {
-            background: #fff3cd;
-            border: 1px solid #ffeeba;
-            padding: 10px;
-            margin-top: 20px;
-            font-size: 16px;
-        }
-        footer {
-            margin-top: 30px;
-            font-size: 14px;
-            color: gray;
+            background-color: #218838;
         }
     </style>
 </head>
 <body>
 
-<header>
-    Punjab Board Results & TikTok Accounts
-</header>
+    <h1>Pakistan Board Result Check</h1>
 
-<div class="container">
-    <h2>Check Your Board Result 2025</h2>
-    <p>Apna Board select karein aur result page open karein:</p>
+    <label>Select Class:</label>
+    <select id="classSelect">
+        <option value="9">9th Class</option>
+        <option value="10">10th Class</option>
+        <option value="11">1st Year</option>
+        <option value="12">2nd Year</option>
+    </select>
+    <br>
 
-    <!-- Punjab Board Result Links -->
-    <button onclick="window.open('https://www.biselahore.com/')">Lahore Board</button>
-    <button onclick="window.open('https://www.bisesahiwal.edu.pk/')">Sahiwal Board</button>
-    <button onclick="window.open('https://www.bisefsd.edu.pk/')">Faisalabad Board</button>
-    <button onclick="window.open('https://www.bisemultan.edu.pk/')">Multan Board</button>
-    <button onclick="window.open('https://www.bisegrw.edu.pk/')">Gujranwala Board</button>
-    <button onclick="window.open('https://www.bisebwp.edu.pk/')">Bahawalpur Board</button>
-    <button onclick="window.open('https://www.biserwp.edu.pk/')">Rawalpindi Board</button>
-    <button onclick="window.open('https://www.bisesargodha.edu.pk/')">Sargodha Board</button>
-    <button onclick="window.open('https://www.bisedgkhan.edu.pk/')">DG Khan Board</button>
+    <label>Select Board:</label>
+    <select id="boardSelect">
+        <option value="https://bisesahiwal.edu.pk/">Sahiwal Board</option>
+        <option value="https://www.biselahore.com/">Lahore Board</option>
+        <option value="https://www.bisemultan.edu.pk/">Multan Board</option>
+        <option value="https://www.bisefaisalabad.com/">Faisalabad Board</option>
+        <option value="https://www.bisegrw.edu.pk/">Gujranwala Board</option>
+        <option value="https://www.biserawalpindi.edu.pk/">Rawalpindi Board</option>
+        <option value="https://www.bisemdn.edu.pk/">DG Khan Board</option>
+        <option value="https://www.bisesargodha.edu.pk/">Sargodha Board</option>
+        <option value="https://www.ajkbise.edu.pk/">AJK Board</option>
+        <option value="https://www.bsek.edu.pk/">Karachi Board</option>
+        <option value="https://www.bisemirpurkhas.edu.pk/">Mirpurkhas Board</option>
+        <option value="https://www.bisesukkur.edu.pk/">Sukkur Board</option>
+        <option value="https://www.bisehyderabad.edu.pk/">Hyderabad Board</option>
+        <option value="https://www.fbise.edu.pk/">FBISE Federal Board</option>
+        <option value="https://www.bisep.edu.pk/">Peshawar Board</option>
+        <option value="https://www.bisemalakand.edu.pk/">Malakand Board</option>
+        <option value="https://www.bisekt.edu.pk/">Kohat Board</option>
+        <option value="https://www.biseb.edu.pk/">Bannu Board</option>
+        <option value="https://www.bisemdn.edu.pk/">Mardan Board</option>
+        <option value="https://www.bisessa.edu.pk/">Swat Board</option>
+        <option value="https://www.bisequetta.edu.pk/">Quetta Board</option>
+    </select>
+    <br>
 
-    <h2>Special Offer</h2>
-    <button onclick="window.open('https://wa.me/923028647505?text=Hello%2C%20I%20want%20to%20buy%20TikTok%20UK%20and%20USA%20accounts')">
-        Buy TikTok UK & USA Accounts
-    </button>
+    <label>Enter Roll Number:</label>
+    <input type="text" id="rollNumber" placeholder="Enter Roll Number">
+    <br>
 
-    <div class="instructions">
-        📌 Hidayat: TikTok UK & USA accounts available hain sirf student offer se 499 PKR me.  
-        Apna roll number theek se likh kar result check karein.
-    </div>
+    <button onclick="checkResult()">Check Result</button>
 
-    <h3>Visitor Counter</h3>
-    <!-- hitwebcounter Code START -->
-    <a href="https://www.hitwebcounter.com" target="_blank">
-    <img src="https://hitwebcounter.com/counter/counter.php?page=21378059&style=0001&nbdigits=5&type=page&initCount=0" title="Counter Widget" Alt="Visit counter For Websites" border="0" /></a>
-</div>
-
-<footer>
-    &copy; 2025 Punjab Results | Designed by Muhammad Akbar
-</footer>
+    <script>
+        function checkResult() {
+            var boardURL = document.getElementById('boardSelect').value;
+            window.open(boardURL, '_blank');
+        }
+    </script>
 
 </body>
 </html>
