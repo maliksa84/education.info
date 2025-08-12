@@ -1,158 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pakistan Board Results</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
-            text-align: center;
-            padding: 20px;
-        }
-        select, input, button {
-            padding: 10px;
-            margin: 10px;
-            font-size: 16px;
-        }
-        .counter {
-            margin-top: 20px;
-        }
-        .buy-link {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 15px;
-            background: green;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .hidayat {
-            background: #fff;
-            margin-top: 30px;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: right;
-            direction: rtl;
-            font-size: 18px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Education Info - Result Checker</title>
+<style>
+    body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
+    select, input { padding: 10px; margin: 10px; width: 80%; max-width: 300px; }
+    button { padding: 10px 20px; background: green; color: white; border: none; cursor: pointer; }
+    button:hover { background: darkgreen; }
+    .counter { margin-top: 20px; }
+</style>
+<script>
+const boards = {
+    "Punjab": ["BISE Lahore", "BISE Faisalabad", "BISE Gujranwala", "BISE Multan", "BISE Rawalpindi", "BISE Sahiwal", "BISE Bahawalpur", "BISE DG Khan", "BISE Sargodha"],
+    "Sindh": ["BIEK Karachi", "BISE Hyderabad", "BISE Sukkur", "BISE Larkana", "BISE Mirpurkhas", "Aga Khan Board"],
+    "KPK": ["BISE Peshawar", "BISE Abbottabad", "BISE Swat", "BISE Kohat", "BISE Mardan", "BISE Dera Ismail Khan", "BISE Bannu", "BISE Malakand"],
+    "Balochistan": ["BISE Quetta"],
+    "AJK": ["BISE Mirpur AJK"],
+    "Federal": ["Federal Board Islamabad"]
+};
+function updateBoards() {
+    let province = document.getElementById("province").value;
+    let boardSelect = document.getElementById("board");
+    boardSelect.innerHTML = "";
+    boards[province].forEach(board => {
+        let opt = document.createElement("option");
+        opt.value = board;
+        opt.textContent = board;
+        boardSelect.appendChild(opt);
+    });
+}
+function checkResult() {
+    let board = document.getElementById("board").value;
+    let roll = document.getElementById("roll").value;
+    if(!roll) { alert("Please enter Roll Number!"); return; }
+    document.getElementById("resultFrame").src = "https://www.google.com/search?q=" + board + " result " + roll;
+}
+</script>
 </head>
 <body>
 
-    <h1>Pakistan Board Result Portal</h1>
+<h1>Education Info - Online Results</h1>
 
-    <!-- Class Selection -->
-    <label>Select Class:</label>
-    <select id="classSelect">
-        <option value="">-- Select Class --</option>
-        <option value="9th">9th Class</option>
-        <option value="10th">10th Class</option>
-        <option value="11th">1st Year</option>
-        <option value="12th">2nd Year</option>
-    </select>
+<select id="class">
+    <option value="">Select Class</option>
+    <option>9th</option>
+    <option>10th</option>
+    <option>11th</option>
+    <option>12th</option>
+</select>
 
-    <!-- Province Selection -->
-    <label>Select Province:</label>
-    <select id="provinceSelect" onchange="loadBoards()">
-        <option value="">-- Select Province --</option>
-        <option value="punjab">Punjab</option>
-        <option value="sindh">Sindh</option>
-        <option value="kpk">KPK</option>
-        <option value="balochistan">Balochistan</option>
-        <option value="federal">Federal</option>
-    </select>
+<select id="province" onchange="updateBoards()">
+    <option value="">Select Province</option>
+    <option>Punjab</option>
+    <option>Sindh</option>
+    <option>KPK</option>
+    <option>Balochistan</option>
+    <option>AJK</option>
+    <option>Federal</option>
+</select>
 
-    <!-- Board Selection -->
-    <label>Select Board:</label>
-    <select id="boardSelect">
-        <option value="">-- Select Board --</option>
-    </select>
+<select id="board">
+    <option value="">Select Board</option>
+</select>
 
-    <!-- Roll Number Input -->
-    <br>
-    <input type="text" id="rollNumber" placeholder="Enter Roll Number">
-    <button onclick="checkResult()">Check Result</button>
+<input type="text" id="roll" placeholder="Enter Roll Number">
+<br>
+<button onclick="checkResult()">Check Result</button>
 
-    <!-- TikTok Buy Link -->
-    <br>
-    <a class="buy-link" href="https://wa.me/923028647505?text=I%20want%20to%20buy%20TikTok%20UK%20and%20USA%20accounts">
+<iframe id="resultFrame" style="width:100%; height:500px; margin-top:20px;"></iframe>
+
+<div style="margin-top:30px;">
+    <a href="https://wa.me/923028647505?text=I%20want%20to%20buy%20TikTok%20UK%20and%20USA%20accounts" style="color:blue; font-weight:bold;">
         Buy TikTok UK & USA Accounts
     </a>
+    <p><b>Hidayat:</b> TikTok UK & USA accounts available hain sirf student offer se 499 PKR me.</p>
+</div>
 
-    <!-- Visitor Counter -->
-    <div class="counter">
-        <a href="https://www.hitwebcounter.com" target="_blank">
-            <img src="https://hitwebcounter.com/counter/counter.php?page=21378059&style=0001&nbdigits=5&type=page&initCount=0" 
-            title="Counter Widget" alt="Visit counter For Websites" border="0" />
-        </a>
-    </div>
-
-    <!-- Hidayat in Urdu -->
-    <div class="hidayat">
-        <p>براہ کرم اپنا رول نمبر درست درج کریں۔</p>
-        <p>یہ ویب سائٹ تمام پاکستانی بورڈز کے رزلٹ چیک کرنے کے لیے ہے۔</p>
-        <p>ٹک ٹاک UK اور USA اکاؤنٹس دستیاب ہیں، صرف اسٹوڈنٹ آفر 499 روپے میں۔</p>
-    </div>
-
-    <script>
-        const boards = {
-            punjab: {
-                "BISE Lahore": "https://www.biselahore.com/",
-                "BISE Multan": "https://www.bisemultan.edu.pk/",
-                "BISE Faisalabad": "https://www.bisefsd.edu.pk/",
-                "BISE Gujranwala": "https://www.bisegrw.edu.pk/",
-                "BISE Sargodha": "https://www.bisesargodha.edu.pk/",
-                "BISE Sahiwal": "https://www.bisesahiwal.edu.pk/",
-                "BISE DG Khan": "https://www.bisedgkhan.edu.pk/",
-                "BISE Rawalpindi": "https://www.biserwp.edu.pk/",
-                "BISE Bahawalpur": "https://www.bisebwp.edu.pk/"
-            },
-            sindh: {
-                "BISE Karachi": "https://www.bsek.edu.pk/",
-                "BISE Hyderabad": "http://www.biseh.edu.pk/",
-                "BISE Sukkur": "https://www.bisesuksindh.edu.pk/",
-                "BISE Larkana": "http://www.biselrk.edu.pk/"
-            },
-            kpk: {
-                "BISE Peshawar": "https://www.bisep.edu.pk/",
-                "BISE Abbottabad": "https://www.biseatd.edu.pk/",
-                "BISE Swat": "https://www.bisess.edu.pk/",
-                "BISE Mardan": "https://www.bisemdn.edu.pk/",
-                "BISE Kohat": "https://www.bisekt.edu.pk/"
-            },
-            balochistan: {
-                "BISE Quetta": "http://www.bbiseqta.edu.pk/"
-            },
-            federal: {
-                "FBISE Islamabad": "https://www.fbise.edu.pk/"
-            }
-        };
-
-        function loadBoards() {
-            let province = document.getElementById("provinceSelect").value;
-            let boardSelect = document.getElementById("boardSelect");
-            boardSelect.innerHTML = '<option value="">-- Select Board --</option>';
-            if (province && boards[province]) {
-                for (let board in boards[province]) {
-                    let opt = document.createElement("option");
-                    opt.value = boards[province][board];
-                    opt.innerHTML = board;
-                    boardSelect.appendChild(opt);
-                }
-            }
-        }
-
-        function checkResult() {
-            let boardUrl = document.getElementById("boardSelect").value;
-            if (boardUrl) {
-                window.open(boardUrl, "_blank");
-            } else {
-                alert("Please select a board.");
-            }
-        }
-    </script>
+<div class="counter">
+    <!-- hitwebcounter Code START -->
+    <a href="https://www.hitwebcounter.com" target="_blank">
+    <img src="https://hitwebcounter.com/counter/counter.php?page=21378059&style=0001&nbdigits=5&type=page&initCount=0" title="Counter Widget" Alt="Visit counter For Websites"   border="0" /></a>
+</div>
 
 </body>
 </html>
