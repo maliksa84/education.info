@@ -1,83 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pakistan Board Results</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 30px;
-            background: #f4f4f4;
+<meta charset="UTF-8">
+<title>Pakistan Board Results</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        text-align: center;
+        padding: 20px;
+    }
+    .box {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 400px;
+        margin: auto;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    select, input {
+        width: 90%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    button {
+        padding: 10px 20px;
+        background: green;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background: darkgreen;
+    }
+    .offer {
+        margin-top: 20px;
+        background: yellow;
+        padding: 10px;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+</style>
+<script>
+const boards = {
+    "Punjab": {
+        "Lahore Board": "https://www.biselahore.com/",
+        "Sahiwal Board": "https://bisesahiwal.edu.pk/",
+        "Multan Board": "https://web.bisemultan.edu.pk/",
+        "Faisalabad Board": "https://www.bisefsd.edu.pk/",
+        "Rawalpindi Board": "https://www.biserawalpindi.edu.pk/",
+        "Gujranwala Board": "https://www.bisegrw.edu.pk/"
+    },
+    "Sindh": {
+        "Karachi Board": "https://www.bsek.edu.pk/",
+        "Hyderabad Board": "https://www.biseh.edu.pk/",
+        "Sukkur Board": "http://www.bisesuksindh.edu.pk/"
+    },
+    "KPK": {
+        "Peshawar Board": "https://www.bisep.edu.pk/",
+        "Abbottabad Board": "https://www.bisepa.edu.pk/",
+        "Mardan Board": "https://web.bisemdn.edu.pk/"
+    },
+    "Balochistan": {
+        "Quetta Board": "http://bbiseqta.edu.pk/"
+    },
+    "AJK": {
+        "AJK Board": "http://www.ajkbise.net/"
+    },
+    "Gilgit Baltistan": {
+        "Baltistan Board": "http://www.gbba.edu.pk/"
+    }
+};
+
+function updateBoards() {
+    const province = document.getElementById("province").value;
+    const boardSelect = document.getElementById("board");
+    boardSelect.innerHTML = "";
+    if (boards[province]) {
+        for (let board in boards[province]) {
+            let opt = document.createElement("option");
+            opt.value = boards[province][board];
+            opt.innerHTML = board;
+            boardSelect.appendChild(opt);
         }
-        select, input, button {
-            padding: 10px;
-            margin: 8px;
-            font-size: 16px;
-        }
-        button {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-    </style>
+    }
+}
+
+function checkResult() {
+    const boardURL = document.getElementById("board").value;
+    if (boardURL) {
+        window.open(boardURL, "_blank");
+    } else {
+        alert("Please select all fields");
+    }
+}
+</script>
 </head>
 <body>
 
-    <h1>Pakistan Board Result Check</h1>
-
-    <label>Select Class:</label>
-    <select id="classSelect">
-        <option value="9">9th Class</option>
-        <option value="10">10th Class</option>
-        <option value="11">1st Year</option>
-        <option value="12">2nd Year</option>
+<div class="box">
+    <h2>Pakistan Board Result Checker</h2>
+    <select id="class">
+        <option value="">Select Class</option>
+        <option>9th Class</option>
+        <option>10th Class</option>
+        <option>1st Year</option>
+        <option>2nd Year</option>
     </select>
-    <br>
-
-    <label>Select Board:</label>
-    <select id="boardSelect">
-        <option value="https://bisesahiwal.edu.pk/">Sahiwal Board</option>
-        <option value="https://www.biselahore.com/">Lahore Board</option>
-        <option value="https://www.bisemultan.edu.pk/">Multan Board</option>
-        <option value="https://www.bisefaisalabad.com/">Faisalabad Board</option>
-        <option value="https://www.bisegrw.edu.pk/">Gujranwala Board</option>
-        <option value="https://www.biserawalpindi.edu.pk/">Rawalpindi Board</option>
-        <option value="https://www.bisemdn.edu.pk/">DG Khan Board</option>
-        <option value="https://www.bisesargodha.edu.pk/">Sargodha Board</option>
-        <option value="https://www.ajkbise.edu.pk/">AJK Board</option>
-        <option value="https://www.bsek.edu.pk/">Karachi Board</option>
-        <option value="https://www.bisemirpurkhas.edu.pk/">Mirpurkhas Board</option>
-        <option value="https://www.bisesukkur.edu.pk/">Sukkur Board</option>
-        <option value="https://www.bisehyderabad.edu.pk/">Hyderabad Board</option>
-        <option value="https://www.fbise.edu.pk/">FBISE Federal Board</option>
-        <option value="https://www.bisep.edu.pk/">Peshawar Board</option>
-        <option value="https://www.bisemalakand.edu.pk/">Malakand Board</option>
-        <option value="https://www.bisekt.edu.pk/">Kohat Board</option>
-        <option value="https://www.biseb.edu.pk/">Bannu Board</option>
-        <option value="https://www.bisemdn.edu.pk/">Mardan Board</option>
-        <option value="https://www.bisessa.edu.pk/">Swat Board</option>
-        <option value="https://www.bisequetta.edu.pk/">Quetta Board</option>
+    
+    <select id="province" onchange="updateBoards()">
+        <option value="">Select Province</option>
+        <option>Punjab</option>
+        <option>Sindh</option>
+        <option>KPK</option>
+        <option>Balochistan</option>
+        <option>AJK</option>
+        <option>Gilgit Baltistan</option>
     </select>
-    <br>
-
-    <label>Enter Roll Number:</label>
-    <input type="text" id="rollNumber" placeholder="Enter Roll Number">
-    <br>
-
+    
+    <select id="board">
+        <option value="">Select Board</option>
+    </select>
+    
+    <input type="text" placeholder="Enter Roll Number">
     <button onclick="checkResult()">Check Result</button>
 
-    <script>
-        function checkResult() {
-            var boardURL = document.getElementById('boardSelect').value;
-            window.open(boardURL, '_blank');
-        }
-    </script>
+    <div class="offer">
+        <a href="https://wa.me/923028647505" target="_blank">
+            Buy TikTok UK & USA Accounts - Only PKR 499 (Student Offer)
+        </a>
+    </div>
+</div>
+
+<div style="margin-top: 20px;">
+    <!-- Visitor Counter -->
+    <a href="https://www.hitwebcounter.com" target="_blank">
+    <img src="https://hitwebcounter.com/counter/counter.php?page=21378059&style=0001&nbdigits=5&type=page&initCount=0" 
+    title="Visitor Counter" Alt="Visit counter" border="0" /></a>
+</div>
+
+<div style="margin-top: 20px; background: #eee; padding: 10px;">
+    <h3>ہدایات:</h3>
+    <p>1: سب سے پہلے کلاس منتخب کریں۔</p>
+    <p>2: اپنا صوبہ منتخب کریں۔</p>
+    <p>3: بورڈ منتخب کریں۔</p>
+    <p>4: رول نمبر درج کر کے نتیجہ چیک کریں۔</p>
+    <p>نوٹ: TikTok UK اور USA اکاؤنٹس صرف 499 روپے میں دستیاب ہیں۔</p>
+</div>
 
 </body>
 </html>
