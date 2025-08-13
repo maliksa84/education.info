@@ -3,102 +3,121 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zoo Roulette - Free Play</title>
+<title>Result Checker + Zoo Roulette</title>
 <style>
-    body { font-family: Arial, sans-serif; text-align: center; background: #222; color: #fff; margin: 0; padding: 0; }
-    h1 { color: gold; }
-    #wheel { width: 300px; height: 300px; border-radius: 50%; border: 10px solid #fff; margin: 20px auto; position: relative; overflow: hidden; }
-    .slice {
-        position: absolute; width: 50%; height: 50%; top: 50%; left: 50%; transform-origin: 0% 0%;
-        background: #444; border: 1px solid #222; text-align: center; font-size: 12px; padding-top: 20px;
-        color: white;
-    }
-    button { padding: 10px 20px; margin: 5px; font-size: 16px; cursor: pointer; background: green; color: white; border: none; border-radius: 5px; }
+    body { font-family: Arial, sans-serif; background: #f0f0f0; text-align: center; margin: 0; padding: 0; }
+    h1, h2 { margin: 10px 0; }
+    .container { padding: 20px; background: white; max-width: 800px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    select, input, button { padding: 10px; margin: 5px; }
+    button { cursor: pointer; background: green; color: white; border: none; }
     button:hover { background: darkgreen; }
-    .chips { font-size: 20px; margin: 10px; }
-    #history { max-height: 150px; overflow-y: auto; background: #333; padding: 10px; margin: 10px auto; width: 300px; border-radius: 10px; }
+    iframe { border: none; }
+    hr { margin: 20px 0; }
+    .roulette-board { display: flex; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
+    .animal { width: 100px; height: 100px; margin: 5px; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #eee; border-radius: 10px; font-weight: bold; }
+    .balance { margin: 10px; font-size: 18px; }
+    .record { margin-top: 15px; max-height: 150px; overflow-y: auto; text-align: left; background: #fafafa; padding: 10px; border: 1px solid #ccc; }
 </style>
-</head>
-<body>
-
-<h1>Zoo Roulette</h1>
-<div class="chips">💰 Chips: <span id="chips">5000</span></div>
-<div>
-    Bet Amount: 
-    <button onclick="setBet(10)">10</button>
-    <button onclick="setBet(100)">100</button>
-    <span id="bet">10</span> chips
-</div>
-
-<div id="wheel"></div>
-<button onclick="spinWheel()">Spin</button>
-
-<h3>History</h3>
-<div id="history"></div>
-
 <script>
+const boards = {
+    "Punjab": ["BISE Lahore", "BISE Faisalabad", "BISE Gujranwala", "BISE Multan", "BISE Rawalpindi", "BISE Sahiwal", "BISE Bahawalpur", "BISE DG Khan", "BISE Sargodha"],
+    "Sindh": ["BIEK Karachi", "BISE Hyderabad", "BISE Sukkur", "BISE Larkana", "BISE Mirpurkhas", "Aga Khan Board"],
+    "KPK": ["BISE Peshawar", "BISE Abbottabad", "BISE Swat", "BISE Kohat", "BISE Mardan", "BISE Dera Ismail Khan", "BISE Bannu", "BISE Malakand"],
+    "Balochistan": ["BISE Quetta"],
+    "AJK": ["BISE Mirpur AJK"],
+    "Federal": ["Federal Board Islamabad"]
+};
+function updateBoards() {
+    let province = document.getElementById("province").value;
+    let boardSelect = document.getElementById("board");
+    boardSelect.innerHTML = "";
+    boards[province].forEach(board => {
+        let opt = document.createElement("option");
+        opt.value = board;
+        opt.textContent = board;
+        boardSelect.appendChild(opt);
+    });
+}
+function checkResult() {
+    let board = document.getElementById("board").value;
+    let roll = document.getElementById("roll").value;
+    if(!roll) { alert("Please enter Roll Number!"); return; }
+    document.getElementById("resultFrame").src = "https://www.google.com/search?q=" + board + " result " + roll;
+}
+
+// Zoo Roulette Game
+let balance = 5000;
 let animals = [
-    {name:"🦅 Eagle", mult:12, color:"#ff4444"},
-    {name:"🦊 Fox", mult:12, color:"#ff8844"},
-    {name:"🐅 Tiger", mult:8, color:"#ffaa00"},
-    {name:"🦓 Zebra", mult:8, color:"#aaffaa"},
-    {name:"🐘 Elephant", mult:8, color:"#aaccff"},
-    {name:"🐒 Monkey", mult:8, color:"#ffccaa"},
-    {name:"🦒 Giraffe", mult:6, color:"#ffeeaa"},
-    {name:"🐍 Snake", mult:6, color:"#88ff88"},
-    {name:"🐼 Panda", mult:24, color:"#dddddd"}
+    {name: 'Eagle', multiplier: 12},
+    {name: 'Tiger', multiplier: 8},
+    {name: 'Lion', multiplier: 8},
+    {name: 'Zebra', multiplier: 8},
+    {name: 'Monkey', multiplier: 8},
+    {name: 'Giraffe', multiplier: 6},
+    {name: 'Elephant', multiplier: 6},
+    {name: 'Shark', multiplier: 24}
 ];
 
-let chips = 5000;
-let betAmount = 10;
-let spinning = false;
+function spin(bet) {
+    if(balance < bet) { alert("Not enough chips!"); return; }
+    balance -= bet;
+    document.getElementById("balance").innerText = balance;
 
-function drawWheel() {
-    let wheel = document.getElementById("wheel");
-    wheel.innerHTML = "";
-    let angleStep = 360 / animals.length;
-    for (let i=0; i<animals.length; i++) {
-        let slice = document.createElement("div");
-        slice.className = "slice";
-        slice.style.transform = `rotate(${i*angleStep}deg) skewY(${90-angleStep}deg)`;
-        slice.style.background = animals[i].color;
-        slice.innerHTML = `<div style="transform: skewY(${-(90-angleStep)}deg) rotate(${angleStep/2}deg)">${animals[i].name} <br>x${animals[i].mult}</div>`;
-        wheel.appendChild(slice);
-    }
-}
-drawWheel();
+    let result = animals[Math.floor(Math.random() * animals.length)];
+    let win = bet * result.multiplier;
+    balance += win;
+    document.getElementById("balance").innerText = balance;
 
-function setBet(amount) {
-    betAmount = amount;
-    document.getElementById("bet").innerText = amount;
-}
-
-function spinWheel() {
-    if (spinning) return;
-    if (chips < betAmount) { alert("Not enough chips!"); return; }
-    spinning = true;
-    chips -= betAmount;
-    document.getElementById("chips").innerText = chips;
-
-    let wheel = document.getElementById("wheel");
-    let spins = Math.floor(Math.random()*5)+5;
-    let finalDeg = Math.floor(Math.random()*360);
-    let totalDeg = spins*360 + finalDeg;
-    wheel.style.transition = "transform 4s ease-out";
-    wheel.style.transform = `rotate(${totalDeg}deg)`;
-
-    setTimeout(()=>{
-        let anglePer = 360 / animals.length;
-        let winningIndex = Math.floor(((360 - (finalDeg % 360)) % 360) / anglePer);
-        let winner = animals[winningIndex];
-        let winAmount = betAmount * winner.mult;
-        chips += winAmount;
-        document.getElementById("chips").innerText = chips;
-        document.getElementById("history").innerHTML = `${winner.name} x${winner.mult} → Won ${winAmount} chips!<br>` + document.getElementById("history").innerHTML;
-        spinning = false;
-    }, 4000);
+    let recordDiv = document.getElementById("record");
+    let msg = `Spin: ${result.name} | Multiplier: ${result.multiplier}x | Won: ${win}`;
+    let p = document.createElement("p");
+    p.innerText = msg;
+    recordDiv.prepend(p);
 }
 </script>
+</head>
+<body>
+<div class="container">
+    <h1>Education Info - Online Results</h1>
+    <select id="class">
+        <option value="">Select Class</option>
+        <option>9th</option>
+        <option>10th</option>
+        <option>11th</option>
+        <option>12th</option>
+    </select>
+    <select id="province" onchange="updateBoards()">
+        <option value="">Select Province</option>
+        <option>Punjab</option>
+        <option>Sindh</option>
+        <option>KPK</option>
+        <option>Balochistan</option>
+        <option>AJK</option>
+        <option>Federal</option>
+    </select>
+    <select id="board">
+        <option value="">Select Board</option>
+    </select>
+    <input type="text" id="roll" placeholder="Enter Roll Number">
+    <button onclick="checkResult()">Check Result</button>
+    <iframe id="resultFrame" style="width:100%; height:400px; margin-top:20px;"></iframe>
 
+    <hr>
+    <h2>Zoo Roulette Game</h2>
+    <div class="balance">Balance: <span id="balance">5000</span> chips</div>
+    <button onclick="spin(10)">Bet 10</button>
+    <button onclick="spin(100)">Bet 100</button>
+    <div class="roulette-board">
+        <div class="animal">Eagle<br>12x</div>
+        <div class="animal">Tiger<br>8x</div>
+        <div class="animal">Lion<br>8x</div>
+        <div class="animal">Zebra<br>8x</div>
+        <div class="animal">Monkey<br>8x</div>
+        <div class="animal">Giraffe<br>6x</div>
+        <div class="animal">Elephant<br>6x</div>
+        <div class="animal">Shark<br>24x</div>
+    </div>
+    <div class="record" id="record"></div>
+</div>
 </body>
 </html>
