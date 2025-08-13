@@ -2,79 +2,101 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Zoo Roulette</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zoo Roulette - Free Play</title>
 <style>
-    body { font-family: Arial, sans-serif; text-align: center; background: #f4f4f4; }
-    h1 { margin-top: 20px; }
-    #chips { font-size: 20px; margin: 10px; }
-    #animals { display: flex; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
-    .animal {
-        width: 100px; height: 100px;
-        background: white; border: 2px solid #ccc; border-radius: 10px;
-        display: flex; align-items: center; justify-content: center;
-        margin: 5px; font-size: 24px; cursor: pointer;
-        transition: transform 0.2s;
+    body { font-family: Arial, sans-serif; text-align: center; background: #222; color: #fff; margin: 0; padding: 0; }
+    h1 { color: gold; }
+    #wheel { width: 300px; height: 300px; border-radius: 50%; border: 10px solid #fff; margin: 20px auto; position: relative; overflow: hidden; }
+    .slice {
+        position: absolute; width: 50%; height: 50%; top: 50%; left: 50%; transform-origin: 0% 0%;
+        background: #444; border: 1px solid #222; text-align: center; font-size: 12px; padding-top: 20px;
+        color: white;
     }
-    .animal:hover { transform: scale(1.1); border-color: #333; }
-    #result { font-size: 22px; margin-top: 20px; font-weight: bold; }
-    button { padding: 10px 20px; margin: 10px; font-size: 16px; cursor: pointer; }
+    button { padding: 10px 20px; margin: 5px; font-size: 16px; cursor: pointer; background: green; color: white; border: none; border-radius: 5px; }
+    button:hover { background: darkgreen; }
+    .chips { font-size: 20px; margin: 10px; }
+    #history { max-height: 150px; overflow-y: auto; background: #333; padding: 10px; margin: 10px auto; width: 300px; border-radius: 10px; }
 </style>
 </head>
 <body>
 
 <h1>Zoo Roulette</h1>
-<div id="chips">Chips: 5000</div>
-
+<div class="chips">💰 Chips: <span id="chips">5000</span></div>
 <div>
     Bet Amount: 
     <button onclick="setBet(10)">10</button>
     <button onclick="setBet(100)">100</button>
+    <span id="bet">10</span> chips
 </div>
 
-<div id="animals">
-    <div class="animal" onclick="spin('🦁')">🦁</div>
-    <div class="animal" onclick="spin('🐘')">🐘</div>
-    <div class="animal" onclick="spin('🦓')">🦓</div>
-    <div class="animal" onclick="spin('🐒')">🐒</div>
-    <div class="animal" onclick="spin('🦅')">🦅</div>
-    <div class="animal" onclick="spin('🐍')">🐍</div>
-</div>
+<div id="wheel"></div>
+<button onclick="spinWheel()">Spin</button>
 
-<div id="result">Choose an animal to start</div>
+<h3>History</h3>
+<div id="history"></div>
 
 <script>
+let animals = [
+    {name:"🦅 Eagle", mult:12, color:"#ff4444"},
+    {name:"🦊 Fox", mult:12, color:"#ff8844"},
+    {name:"🐅 Tiger", mult:8, color:"#ffaa00"},
+    {name:"🦓 Zebra", mult:8, color:"#aaffaa"},
+    {name:"🐘 Elephant", mult:8, color:"#aaccff"},
+    {name:"🐒 Monkey", mult:8, color:"#ffccaa"},
+    {name:"🦒 Giraffe", mult:6, color:"#ffeeaa"},
+    {name:"🐍 Snake", mult:6, color:"#88ff88"},
+    {name:"🐼 Panda", mult:24, color:"#dddddd"}
+];
+
 let chips = 5000;
 let betAmount = 10;
+let spinning = false;
+
+function drawWheel() {
+    let wheel = document.getElementById("wheel");
+    wheel.innerHTML = "";
+    let angleStep = 360 / animals.length;
+    for (let i=0; i<animals.length; i++) {
+        let slice = document.createElement("div");
+        slice.className = "slice";
+        slice.style.transform = `rotate(${i*angleStep}deg) skewY(${90-angleStep}deg)`;
+        slice.style.background = animals[i].color;
+        slice.innerHTML = `<div style="transform: skewY(${-(90-angleStep)}deg) rotate(${angleStep/2}deg)">${animals[i].name} <br>x${animals[i].mult}</div>`;
+        wheel.appendChild(slice);
+    }
+}
+drawWheel();
 
 function setBet(amount) {
     betAmount = amount;
-    alert("Bet set to " + amount + " chips");
+    document.getElementById("bet").innerText = amount;
 }
 
-function spin(choice) {
-    if (chips < betAmount) {
-        alert("Not enough chips!");
-        return;
-    }
+function spinWheel() {
+    if (spinning) return;
+    if (chips < betAmount) { alert("Not enough chips!"); return; }
+    spinning = true;
     chips -= betAmount;
-    updateChips();
+    document.getElementById("chips").innerText = chips;
 
-    const animals = ['🦁','🐘','🦓','🐒','🦅','🐍'];
-    const winAnimal = animals[Math.floor(Math.random() * animals.length)];
+    let wheel = document.getElementById("wheel");
+    let spins = Math.floor(Math.random()*5)+5;
+    let finalDeg = Math.floor(Math.random()*360);
+    let totalDeg = spins*360 + finalDeg;
+    wheel.style.transition = "transform 4s ease-out";
+    wheel.style.transform = `rotate(${totalDeg}deg)`;
 
-    if (choice === winAnimal) {
-        chips += betAmount * 5; // 5x payout
-        document.getElementById("result").innerText = 
-            "🎉 You won! It was " + winAnimal;
-    } else {
-        document.getElementById("result").innerText = 
-            "😢 You lost! It was " + winAnimal;
-    }
-    updateChips();
-}
-
-function updateChips() {
-    document.getElementById("chips").innerText = "Chips: " + chips;
+    setTimeout(()=>{
+        let anglePer = 360 / animals.length;
+        let winningIndex = Math.floor(((360 - (finalDeg % 360)) % 360) / anglePer);
+        let winner = animals[winningIndex];
+        let winAmount = betAmount * winner.mult;
+        chips += winAmount;
+        document.getElementById("chips").innerText = chips;
+        document.getElementById("history").innerHTML = `${winner.name} x${winner.mult} → Won ${winAmount} chips!<br>` + document.getElementById("history").innerHTML;
+        spinning = false;
+    }, 4000);
 }
 </script>
 
