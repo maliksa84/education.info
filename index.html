@@ -3,104 +3,94 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Zoo Roulette (Free) + Board Result Checker</title>
+<title>Zoo Roulette (Board Style) + Result Checker</title>
 <style>
   :root{
-    --bg:#0f1220; --card:#171a2b; --accent:#f7c843; --accent2:#19c37d; --muted:#9aa3b2; --text:#ecf1ff;
+    --bg:#0f1220; --card:#171a2b; --accent:#f7c843; --accent2:#19c37d; --muted:#9aa3b2; --text:#ecf1ff; --line:#2a2f52;
   }
   *{box-sizing:border-box}
-  body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);}
-  h1,h2,h3{margin:10px 0}
-  .wrap{max-width:1100px;margin:0 auto;padding:16px}
-  .card{background:var(--card);border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.25);padding:16px;margin:12px 0}
-  .grid{display:grid;gap:12px}
-  @media(min-width:900px){.grid-2{grid-template-columns:1.2fr .8fr}}
+  body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+  .wrap{max-width:1180px;margin:0 auto;padding:16px}
+  .card{background:#151a2d;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.25);padding:16px;margin:12px 0}
+  h1,h2{margin:8px 0 12px}
   .muted{color:var(--muted)}
 
-  /* =================== ZOO ROULETTE =================== */
-  .zr-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-  .balance{font-size:18px;font-weight:700}
+  /* ======== BOARD STYLE ZOO ROULETTE ======== */
+  .zr-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .balance{font-size:18px;font-weight:800}
   .chips{display:flex;gap:8px;flex-wrap:wrap}
-  .chip{padding:8px 12px;border-radius:999px;background:#242846;border:1px solid #2f3558;color:#fff;cursor:pointer;font-weight:700}
+  .chip{padding:10px 14px;border-radius:999px;background:#22284b;border:1px solid var(--line);color:#fff;cursor:pointer;font-weight:800}
   .chip.active{outline:2px solid var(--accent)}
 
-  .zr-area{display:grid;gap:16px}
-  @media(min-width:900px){.zr-area{grid-template-columns:480px 1fr}}
+  .zr-layout{display:grid;grid-template-columns:260px 1fr 240px;gap:14px}
+  @media(max-width:980px){.zr-layout{grid-template-columns:1fr}}
 
-  /* Wheel */
-  .wheel-wrap{position:relative;display:flex;align-items:center;justify-content:center}
-  .wheel{width:420px;height:420px;border-radius:50%;border:10px solid #1f233c;position:relative;overflow:hidden;background:#0b0e1a;transition:transform 4.8s cubic-bezier(.13,.74,.16,1)}
-  .pin{position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;border-bottom:24px solid var(--accent)}
-  .seg{position:absolute;width:50%;height:50%;top:50%;left:50%;transform-origin:0% 0%;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center;font-weight:700;text-shadow:0 2px 4px rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.08)}
-  .seg > div{transform:skewY(calc(-1*(90deg - var(--ang))));padding:6px}
-  .seg small{display:block;color:#fff;opacity:.95;font-size:12px}
+  .panel{background:#10162b;border:1px solid var(--line);border-radius:12px;padding:12px}
 
-  /* Colors for segments */
-  .c1{background:#e74c3c}.c2{background:#d35400}.c3{background:#3498db}.c4{background:#1abc9c}
-  .c5{background:#9b59b6}.c6{background:#2ecc71}.c7{background:#16a085}.c8{background:#f1c40f;color:#1a1a1a}.c9{background:#34495e}
+  /* Record panel */
+  .history{max-height:520px;overflow:auto}
+  .history table{width:100%;border-collapse:collapse}
+  .history th,.history td{padding:8px;border-bottom:1px solid #20274a;font-size:13px;text-align:left}
+  .history tr.win{background:#0f2b1f}
+  .history tr.lose{background:#2a1717}
 
-  /* Betting board */
-  .board{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-  .cell{background:#1b1f35;border:1px solid #2a2f52;border-radius:12px;padding:10px;text-align:center;cursor:pointer;position:relative}
-  .cell:hover{outline:2px solid #2f3558}
-  .cell .name{font-size:16px;font-weight:700}
+  /* Board grid */
+  .board-wrap{position:relative}
+  .stop-banner{position:absolute;left:50%;top:-10px;transform:translateX(-50%);background:#f7c843;color:#231; padding:6px 12px;border-radius:999px;font-weight:800;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+  .board{display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(4,90px);gap:8px;padding:10px;background:#0e142a;border:1px solid var(--line);border-radius:12px}
+  .cell{background:#1a2140;border:1px solid #26305a;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;position:relative;color:#e7edff;font-weight:800}
   .cell .mult{font-size:12px;color:#ffd54f}
-  .cell .bet{position:absolute;bottom:8px;right:8px;background:#00000080;padding:3px 7px;border-radius:999px;font-size:12px}
+  .cell .badge{position:absolute;right:6px;bottom:6px;background:#0009;padding:2px 6px;border-radius:999px;font-size:11px}
+  .cell.active{outline:3px solid #66d9ef;box-shadow:0 0 10px #66d9ef80}
+  .cell.bet{background:#242c59}
+  .centerbox{grid-column:3/5;grid-row:2/4;background:#10162b;border:2px dashed #31407a;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#cbd6ff}
 
-  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
-  .btn{background:var(--accent2);border:none;color:#00120a;padding:10px 14px;border-radius:10px;font-weight:800;cursor:pointer}
-  .btn.secondary{background:#2a2f52;color:#d7def0}
-
+  /* Right controls */
+  .right .btn{width:100%;padding:12px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:900;margin:6px 0}
+  .btn.spin{background:#19c37d;color:#02150c}
+  .btn.clear{background:#2b2f55;color:#cfe3ff}
   .status{margin-top:8px;font-weight:700}
 
-  /* History */
-  .history{max-height:260px;overflow:auto;background:#11152a;border:1px solid #273055;border-radius:10px}
-  .history table{width:100%;border-collapse:collapse}
-  .history th,.history td{padding:10px;border-bottom:1px solid #222a47;font-size:14px}
-  .history tr.win{background:#0e2b1f}
-  .history tr.lose{background:#2a1515}
-
-  /* =================== RESULT CHECKER =================== */
+  /* Result Checker */
   .rc label{display:block;text-align:left;margin:6px 0 4px}
-  .rc select,.rc input{width:100%;padding:10px;border-radius:10px;border:1px solid #2a2f52;background:#0f1430;color:#e9eeff}
-  .rc .grid{grid-template-columns:repeat(2,1fr)}
-  .rc .grid-3{grid-template-columns:repeat(3,1fr)}
-  .rc button{background:#3552ff;color:#fff;border:none;padding:10px 14px;border-radius:10px;font-weight:800;cursor:pointer}
+  .rc select,.rc input{width:100%;padding:10px;border-radius:10px;border:1px solid var(--line);background:#0f1430;color:#e9eeff}
+  .rc .grid{display:grid;gap:10px;grid-template-columns:repeat(3,1fr)}
+  @media(max-width:900px){.rc .grid{grid-template-columns:1fr}}
   iframe{width:100%;height:520px;border:0;border-radius:12px;background:#0b0f24}
 </style>
 </head>
 <body>
   <div class="wrap">
     <div class="card">
-      <h1>Zoo Roulette — Free Mode</h1>
+      <h1>Zoo Roulette — Free Mode (Board Style)</h1>
       <div class="zr-top">
         <div class="balance">💰 Balance: <span id="bal">5000</span> chips</div>
         <div class="chips" id="chipsRow"></div>
       </div>
 
-      <div class="zr-area">
-        <!-- Wheel side -->
-        <div class="wheel-wrap">
-          <div class="pin"></div>
-          <div id="wheel" class="wheel"></div>
+      <div class="zr-layout">
+        <!-- Left: History -->
+        <div class="panel history">
+          <h3 style="margin:6px 0 10px">Record</h3>
+          <table>
+            <thead><tr><th>#</th><th>Result</th><th>x</th><th>Win</th><th>Bal</th></tr></thead>
+            <tbody id="histBody"></tbody>
+          </table>
         </div>
 
-        <!-- Betting + history side -->
-        <div>
-          <div class="board" id="betBoard"></div>
-          <div class="actions">
-            <button class="btn" id="spinBtn">SPIN</button>
-            <button class="btn secondary" id="clearBtn">Clear Bets</button>
-          </div>
-          <div class="status" id="status">Place your bets by selecting a chip and tapping an animal.</div>
-          <div class="history card" style="margin-top:12px">
-            <table>
-              <thead>
-                <tr><th>#</th><th>Result</th><th>Mult</th><th>Win</th><th>Balance</th></tr>
-              </thead>
-              <tbody id="histBody"></tbody>
-            </table>
-          </div>
+        <!-- Center: Board -->
+        <div class="panel board-wrap">
+          <div class="stop-banner" id="banner">Stop betting</div>
+          <div id="board" class="board"></div>
+        </div>
+
+        <!-- Right: Controls -->
+        <div class="panel right">
+          <h3 style="margin:6px 0">Place Your Bets</h3>
+          <div class="muted" style="margin-bottom:8px">Select a chip and tap any animal to add bet. Panda se animation start hoti hai.</div>
+          <button id="spinBtn" class="btn spin">SPIN</button>
+          <button id="clearBtn" class="btn clear">Clear Bets</button>
+          <div class="status" id="status">No bet placed.</div>
         </div>
       </div>
     </div>
@@ -108,7 +98,7 @@
     <!-- ================= Result Checker ================= -->
     <div class="card rc">
       <h2>Board Result Checker</h2>
-      <div class="grid rc grid-3">
+      <div class="grid">
         <div>
           <label>Class</label>
           <select id="classSelect">
@@ -128,13 +118,13 @@
           <select id="boardSelect"></select>
         </div>
       </div>
-      <div class="grid rc">
+      <div class="grid" style="grid-template-columns:2fr 1fr">
         <div>
           <label>Roll Number</label>
           <input id="rollInput" placeholder="Enter Roll Number" />
         </div>
         <div style="align-self:end">
-          <button id="openBtn">Open Official Page</button>
+          <button id="openBtn" class="btn spin" style="width:100%">Open Official Page</button>
         </div>
       </div>
       <iframe id="resultFrame" title="Official Result Page"></iframe>
@@ -143,129 +133,192 @@
 
 <script>
 /********************
- * ZOO ROULETTE GAME *
+ * BOARD-STYLE ZOO ROULETTE
  ********************/
-// Animals & multipliers (as requested)
+// Animals and multipliers (exactly as requested)
 const ANIMALS = [
-  {name:'Eagle', mult:12, color:'c1'},
-  {name:'Lion', mult:12, color:'c2'},
-  {name:'Pigeon', mult:8, color:'c3'},
-  {name:'Peacock', mult:8, color:'c4'},
-  {name:'Monkey', mult:8, color:'c5'},
-  {name:'Panda', mult:8, color:'c6'},
-  {name:'Swallow', mult:6, color:'c7'},
-  {name:'Rabbit', mult:6, color:'c8'},
-  {name:'Shark', mult:24, color:'c9'}
+  {name:'Eagle', mult:12},
+  {name:'Lion', mult:12},
+  {name:'Pigeon', mult:8},
+  {name:'Peacock', mult:8},
+  {name:'Monkey', mult:8},
+  {name:'Panda', mult:8},
+  {name:'Swallow', mult:6},
+  {name:'Rabbit', mult:6},
+  {name:'Shark', mult:24}
 ];
 
+// Chip values like real game
+const CHIP_VALUES = [2,5,10,20,50,100];
+let currentChip = CHIP_VALUES[2]; // default 10
 let balance = 5000;
-let currentChip = 10;
-const CHIP_VALUES = [10,50,100,500,1000];
-let bets = {}; // index -> amount
-let spinInProgress = false;
+let bets = {}; // animalName -> amount
+let spinning = false;
 let historyCount = 0;
 
 const balEl = document.getElementById('bal');
 const chipsRow = document.getElementById('chipsRow');
-const boardEl = document.getElementById('betBoard');
-const wheelEl = document.getElementById('wheel');
+const boardEl = document.getElementById('board');
 const statusEl = document.getElementById('status');
 const histBody = document.getElementById('histBody');
+const banner = document.getElementById('banner');
 
 // Build chips row
 CHIP_VALUES.forEach(v=>{
   const b = document.createElement('button');
   b.className = 'chip' + (v===currentChip?' active':'');
   b.textContent = v;
-  b.onclick = ()=>{
-    currentChip = v; [...chipsRow.children].forEach(x=>x.classList.remove('active')); b.classList.add('active');
-  };
+  b.onclick = ()=>{ currentChip=v; [...chipsRow.children].forEach(x=>x.classList.remove('active')); b.classList.add('active'); };
   chipsRow.appendChild(b);
 });
 
-// Build betting board
-ANIMALS.forEach((a,idx)=>{
-  bets[idx]=0;
-  const c = document.createElement('div');
-  c.className = 'cell';
-  c.innerHTML = `<div class="name">${a.name}</div><div class="mult">x${a.mult}</div><div class="bet" id="bet-${idx}">0</div>`;
-  c.onclick = ()=> addBet(idx);
-  boardEl.appendChild(c);
+// ===== Grid structure =====
+const ROWS=4, COLS=6;
+const totalPerimeter = (COLS*2 + (ROWS-2)*2); // 20 cells
+
+// Build grid cells (auto-placement with a 2x2 center hole for display)
+const cells = []; // store DOM with r,c
+for(let r=0;r<ROWS;r++){
+  for(let c=0;c<COLS;c++){
+    if(r>=1 && r<=2 && c>=2 && c<=3){
+      if(r===1 && c===2){
+        const center = document.createElement('div');
+        center.className='centerbox';
+        center.innerHTML = '<h2>Zoo Roulette</h2><div class="muted">Free mode — no real money</div>';
+        boardEl.appendChild(center);
+      }
+      continue; // skip 2x2 center
+    }
+    const cell = document.createElement('div');
+    cell.className='cell';
+    boardEl.appendChild(cell);
+    cells.push({el:cell,r,c});
+  }
+}
+
+// Helper to get perimeter order clockwise starting at top-left and moving right
+function perimeterOrder(rows, cols){
+  const list=[];
+  for(let c=0;c<cols;c++) list.push([0,c]); // top row
+  for(let r=1;r<rows-1;r++) list.push([r,cols-1]); // right col
+  for(let c=cols-1;c>=0;c--) list.push([rows-1,c]); // bottom row
+  for(let r=rows-2;r>0;r--) list.push([r,0]); // left col
+  return list;
+}
+const path = perimeterOrder(ROWS,COLS); // length 20
+
+// Map grid positions to actual DOM cell index (because we skipped center cells)
+function findCellDomIndex(r,c){
+  let idx=-1, k=0;
+  for(let rr=0; rr<ROWS; rr++){
+    for(let cc=0; cc<COLS; cc++){
+      if(rr>=1 && rr<=2 && cc>=2 && cc<=3) continue;
+      if(rr===r && cc===c) { idx=k; return idx; }
+      k++;
+    }
+  }
+  return idx;
+}
+
+// Sequence of animals along perimeter starting from PANDA index
+const startName = 'Panda';
+const orderedOnce = (()=>{
+  const i = ANIMALS.findIndex(a=>a.name===startName);
+  return [...ANIMALS.slice(i), ...ANIMALS.slice(0,i)];
+})();
+const seq = [];
+while(seq.length < totalPerimeter){
+  for(const a of orderedOnce){ if(seq.length<totalPerimeter) seq.push(a); }
+}
+
+// Render animals on cells following path order
+const betAmounts = {}; // by index in path
+path.forEach((pos,i)=>{
+  const [r,c]=pos; const domIndex = findCellDomIndex(r,c);
+  const cell = cells[domIndex].el; const a = seq[i];
+  cell.dataset.index = i;
+  cell.dataset.name = a.name;
+  cell.innerHTML = `<div>${a.name}</div><div class="mult">x${a.mult}</div><div class="badge" id="b${i}">0</div>`;
+  betAmounts[i]=0;
+  cell.addEventListener('click', ()=> placeBet(i));
 });
 
-function addBet(idx){
-  if(spinInProgress) return;
-  if(balance < currentChip){ status('Not enough chips.'); return; }
+function placeBet(i){
+  if(spinning) return; if(balance < currentChip){ status('Not enough chips'); return; }
   balance -= currentChip; updateBal();
-  bets[idx] += currentChip; document.getElementById('bet-'+idx).textContent = bets[idx];
-  status(`Bet +${currentChip} on ${ANIMALS[idx].name}`);
+  betAmounts[i] += currentChip; document.getElementById('b'+i).textContent = betAmounts[i];
+  cells[findDomByIndex(i)].el.classList.add('bet');
+  status(`Bet +${currentChip} on ${seq[i].name}`);
+}
+
+function findDomByIndex(i){
+  // Given path index, return cells[] entry
+  const [r,c] = path[i];
+  const di = findCellDomIndex(r,c);
+  return cells[di];
 }
 
 function clearBets(){
-  if(spinInProgress) return;
-  let refund = 0; Object.keys(bets).forEach(i=>{ refund += bets[i]; bets[i]=0; document.getElementById('bet-'+i).textContent='0'; });
-  balance += refund; updateBal();
-  status('All bets cleared. Refund: '+refund);
+  if(spinning) return;
+  let refund=0; for(const i in betAmounts){ refund += betAmounts[i]; betAmounts[i]=0; const d=findDomByIndex(+i); d.el.classList.remove('bet'); document.getElementById('b'+i).textContent='0'; }
+  balance += refund; updateBal(); status('Bets cleared. Refund '+refund);
 }
 
 document.getElementById('clearBtn').onclick = clearBets;
 
-document.getElementById('spinBtn').onclick = ()=>{
-  if(spinInProgress) return;
-  const totalBet = Object.values(bets).reduce((a,b)=>a+b,0);
-  if(totalBet<=0){ status('Place a bet first.'); return; }
-  spinInProgress = true; status('Spinning...');
-  spinWheel();
-};
+// Spin logic: highlight travels around path starting from Panda's cell (index 0)
+let currentPos = 0; // start at 0 (Panda)
+function spin(){
+  if(spinning) return; const totalStake = Object.values(betAmounts).reduce((a,b)=>a+b,0); if(totalStake<=0){ status('Place a bet first.'); return; }
+  spinning = true; banner.textContent='Spinning...'; status('Good luck!');
 
-function updateBal(){ balEl.textContent = balance; }
-function status(msg){ statusEl.textContent = msg; }
+  // Choose a random winning index
+  const winIndex = Math.floor(Math.random()*path.length);
 
-// Build wheel segments visually
-const ANG = 360/ANIMALS.length; // 40deg for 9? actually 40; we'll compute per var
-ANIMALS.forEach((a,i)=>{
-  const seg = document.createElement('div');
-  seg.className = `seg ${a.color}`; seg.style.setProperty('--ang', (90-ANG)+'deg');
-  seg.style.transform = `rotate(${i*ANG}deg) skewY(${90-ANG}deg)`;
-  seg.innerHTML = `<div>${a.name}<small>x${a.mult}</small></div>`;
-  wheelEl.appendChild(seg);
-});
+  // Animate rounds: speed decreases
+  const totalSteps = path.length*3 + winIndex; // 3 laps + offset to land on winIndex
+  let step=0; let delay=80; // ms, increases
 
-let currentRotation = 0;
-function spinWheel(){
-  // pick random winning index uniformly
-  const winIndex = Math.floor(Math.random()*ANIMALS.length);
-  // compute target so that winIndex ends up at the top (pin at 0deg)
-  const targetAngle = 360 - (winIndex*ANG + ANG/2); // center of segment to pin
-  const extraSpins = 5; // full rotations
-  const final = currentRotation + extraSpins*360 + targetAngle - (currentRotation % 360);
-  currentRotation = final;
-  wheelEl.style.transform = `rotate(${final}deg)`;
+  const tick = ()=>{
+    // remove previous highlight
+    findDomByIndex(currentPos).el.classList.remove('active');
+    currentPos = (currentPos+1)%path.length;
+    findDomByIndex(currentPos).el.classList.add('active');
+    step++;
+    // slow down towards the end
+    if(step>path.length*2) delay += 12;
+    if(step>path.length*2.6) delay += 16;
 
-  // settle after animation
-  setTimeout(()=>{
-    resolveRound(winIndex);
-  }, 5000);
+    if(step<totalSteps){ setTimeout(tick, delay); }
+    else { setTimeout(()=>finish(winIndex), 220); }
+  };
+  setTimeout(tick, delay);
 }
 
-function resolveRound(winIndex){
-  const winner = ANIMALS[winIndex];
-  const stake = Object.values(bets).reduce((a,b)=>a+b,0);
-  const win = (bets[winIndex]||0) * winner.mult;
-  balance += win; updateBal();
-  status(`Result: ${winner.name} x${winner.mult}. You ${win>0?('won '+win):'won 0'}.`);
+document.getElementById('spinBtn').onclick = spin;
 
-  // history row
-  historyCount += 1;
+function finish(winIndex){
+  const winner = seq[winIndex];
+  // Compute win: only winning cell pays (bet * multiplier)
+  const winAmount = (betAmounts[winIndex]||0) * winner.mult;
+  balance += winAmount; updateBal();
+
+  // History entry
+  historyCount++;
   const tr = document.createElement('tr');
-  tr.className = win>0?'win':'lose';
-  tr.innerHTML = `<td>${historyCount}</td><td>${winner.name}</td><td>x${winner.mult}</td><td>${win}</td><td>${balance}</td>`;
+  tr.className = winAmount>0 ? 'win' : 'lose';
+  tr.innerHTML = `<td>${historyCount}</td><td>${winner.name}</td><td>x${winner.mult}</td><td>${winAmount}</td><td>${balance}</td>`;
   histBody.prepend(tr);
 
-  // reset bets display
-  Object.keys(bets).forEach(i=>{ bets[i]=0; document.getElementById('bet-'+i).textContent='0'; });
-  spinInProgress = false;
+  // Reset bets
+  for(const i in betAmounts){ betAmounts[i]=0; document.getElementById('b'+i).textContent='0'; findDomByIndex(+i).el.classList.remove('bet'); }
+
+  banner.textContent='Stop betting';
+  status(`Result: ${winner.name} x${winner.mult}. ${winAmount>0?('You won '+winAmount):'No win this round.'}`);
+  spinning=false;
 }
+
+function updateBal(){ balEl.textContent = balance; }
 
 /************************
  * RESULT CHECKER (PK)   *
@@ -292,7 +345,6 @@ provSelect.addEventListener('change', ()=>{
 document.getElementById('openBtn').addEventListener('click', ()=>{
   const brd = boardSelect.value; const roll = document.getElementById('rollInput').value.trim();
   if(!brd || !roll){ alert('Please select board and enter roll number.'); return; }
-  // Use a search query to reach official result quickly (embedding most boards is blocked)
   const q = encodeURIComponent(`${brd} result ${roll}`);
   document.getElementById('resultFrame').src = `https://www.google.com/search?q=${q}`;
 });
