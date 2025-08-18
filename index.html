@@ -1,106 +1,254 @@
-import java.util.InputMismatchException;
-import java.util.Random;
-import java.util.Scanner;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoo Roulette</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
 
-public class VisualZooRoulette {
+        .game-container {
+            background: #222;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+        }
 
-    public static void main(String[] args) {
-        System.out.println("----------------------------------------");
-        System.out.println("     Welcome to ZOO ROULETTE (Visual)     ");
-        System.out.println("----------------------------------------");
+        .header {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffcc00;
+            margin-bottom: 20px;
+        }
 
-        int currentPoints = 5000;
+        #points-display {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: #4CAF50;
+        }
+
+        .animal-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .animal-card {
+            background: #444;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            position: relative;
+        }
+
+        .animal-card:hover {
+            background: #555;
+            transform: scale(1.05);
+        }
         
-        // Animals and their multipliers as shown in the image
-        String[] animals = {"Monkey", "Rabbit", "Pigeon", "Peacock", "Lion", "Shark", "Eagle"};
-        double[] multipliers = {2.0, 6.0, 8.0, 12.0, 12.0, 24.0, 8.0};
+        .animal-card.selected {
+            background: #007bff;
+            transform: scale(1.1);
+        }
 
-        Scanner scanner = new Scanner(System.in);
-        Random random = new Random();
+        .animal-card .animal-name {
+            font-size: 18px;
+            font-weight: bold;
+        }
 
-        while (currentPoints > 0) {
-            System.out.println("\n----------------------------------------");
-            System.out.println("Current Points: " + currentPoints);
-            System.out.println("Place your bet on an animal:");
-            
-            // Displaying the animals in a grid-like fashion
-            System.out.println("1. Monkey (x" + multipliers[0] + ") | 2. Rabbit (x" + multipliers[1] + ") | 3. Pigeon (x" + multipliers[2] + ")");
-            System.out.println("4. Peacock (x" + multipliers[3] + ") | 5. Lion (x" + multipliers[4] + ") | 6. Shark (x" + multipliers[5] + ")");
-            System.out.println("7. Eagle (x" + multipliers[6] + ")");
+        .animal-card .multiplier {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 14px;
+            color: #ffcc00;
+        }
 
-            int userChoice = 0;
-            int betAmount = 0;
+        .input-group {
+            margin-bottom: 15px;
+        }
 
-            try {
-                System.out.print("Enter your choice (1-" + animals.length + "): ");
-                userChoice = scanner.nextInt();
-                if (userChoice < 1 || userChoice > animals.length) {
-                    System.out.println("Invalid choice. Please select a valid number.");
-                    continue;
+        .input-group input {
+            padding: 8px;
+            font-size: 16px;
+            width: 150px;
+            text-align: center;
+            border-radius: 5px;
+            border: 1px solid #666;
+            background: #555;
+            color: #eee;
+        }
+        
+        .buttons-group button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background: #4CAF50;
+            color: white;
+            transition: background 0.2s;
+        }
+
+        .buttons-group button:hover {
+            background: #45a049;
+        }
+        
+        #result {
+            font-size: 20px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        #winning-animal-display {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffcc00;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <div class="header">ZOO ROULETTE</div>
+        <div id="points-display">Points: 5000</div>
+
+        <div class="animal-grid">
+            <div class="animal-card" data-animal="Monkey" data-multiplier="2">
+                <span class="animal-name">Monkey</span>
+                <span class="multiplier">x2</span>
+            </div>
+            <div class="animal-card" data-animal="Rabbit" data-multiplier="6">
+                <span class="animal-name">Rabbit</span>
+                <span class="multiplier">x6</span>
+            </div>
+            <div class="animal-card" data-animal="Pigeon" data-multiplier="8">
+                <span class="animal-name">Pigeon</span>
+                <span class="multiplier">x8</span>
+            </div>
+            <div class="animal-card" data-animal="Peacock" data-multiplier="12">
+                <span class="animal-name">Peacock</span>
+                <span class="multiplier">x12</span>
+            </div>
+            <div class="animal-card" data-animal="Lion" data-multiplier="12">
+                <span class="animal-name">Lion</span>
+                <span class="multiplier">x12</span>
+            </div>
+            <div class="animal-card" data-animal="Shark" data-multiplier="24">
+                <span class="animal-name">Shark</span>
+                <span class="multiplier">x24</span>
+            </div>
+            <div class="animal-card" data-animal="Eagle" data-multiplier="8">
+                <span class="animal-name">Eagle</span>
+                <span class="multiplier">x8</span>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label for="bet-amount">Enter Bet:</label>
+            <input type="number" id="bet-amount" min="20" placeholder="Min 20">
+        </div>
+
+        <div class="buttons-group">
+            <button id="spin-button">Spin</button>
+        </div>
+
+        <div id="winning-animal-display"></div>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const pointsDisplay = document.getElementById('points-display');
+            const animalCards = document.querySelectorAll('.animal-card');
+            const betAmountInput = document.getElementById('bet-amount');
+            const spinButton = document.getElementById('spin-button');
+            const resultDisplay = document.getElementById('result');
+            const winningAnimalDisplay = document.getElementById('winning-animal-display');
+
+            let currentPoints = 5000;
+            let selectedAnimal = null;
+            const animals = ["Monkey", "Rabbit", "Pigeon", "Peacock", "Lion", "Shark", "Eagle"];
+            const multipliers = [2.0, 6.0, 8.0, 12.0, 12.0, 24.0, 8.0];
+
+            function updatePointsDisplay() {
+                pointsDisplay.textContent = `Points: ${currentPoints}`;
+            }
+
+            animalCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    animalCards.forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                    selectedAnimal = card.dataset.animal;
+                });
+            });
+
+            spinButton.addEventListener('click', () => {
+                const betAmount = parseInt(betAmountInput.value);
+
+                if (!selectedAnimal) {
+                    resultDisplay.textContent = "Please select an animal!";
+                    return;
                 }
-
-                System.out.print("Enter your bet amount (min 20): ");
-                betAmount = scanner.nextInt();
-                if (betAmount < 20) {
-                    System.out.println("Bet must be 20 or more.");
-                    continue;
+                if (isNaN(betAmount) || betAmount < 20) {
+                    resultDisplay.textContent = "Bet must be 20 or more!";
+                    return;
                 }
                 if (betAmount > currentPoints) {
-                    System.out.println("You can't bet more points than you have. Your points: " + currentPoints);
-                    continue;
+                    resultDisplay.textContent = "You don't have enough points!";
+                    return;
                 }
 
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input! Please enter a number.");
-                scanner.nextLine(); // Clear the invalid input from scanner
-                continue;
-            }
+                spinButton.disabled = true;
+                resultDisplay.textContent = "Spinning...";
 
-            scanner.nextLine(); // Consume the newline character
+                const winningIndex = Math.floor(Math.random() * animals.length);
+                const winningAnimal = animals[winningIndex];
+                const multiplier = multipliers[winningIndex];
 
-            String userAnimal = animals[userChoice - 1];
-            double multiplier = multipliers[userChoice - 1];
-            System.out.println("\nYou chose: " + userAnimal);
-            System.out.println("You bet: " + betAmount + " points.");
-            System.out.println("Roulette wheel is spinning...");
+                setTimeout(() => {
+                    winningAnimalDisplay.textContent = `Winning Animal: ${winningAnimal}`;
+                    
+                    if (selectedAnimal === winningAnimal) {
+                        const winnings = betAmount * multiplier;
+                        currentPoints += winnings;
+                        resultDisplay.textContent = `Congratulations! You won ${winnings} points!`;
+                        resultDisplay.style.color = '#4CAF50';
+                    } else {
+                        currentPoints -= betAmount;
+                        resultDisplay.textContent = `You lost. Better luck next time!`;
+                        resultDisplay.style.color = '#f44336';
+                    }
 
-            try {
-                Thread.sleep(2000); // Simulate spinning
-            } catch (InterruptedException e) {
-                // Ignore
-            }
+                    updatePointsDisplay();
+                    spinButton.disabled = false;
+                    
+                    if (currentPoints <= 0) {
+                        resultDisplay.textContent = "Game Over! You have no more points.";
+                        spinButton.disabled = true;
+                    }
 
-            int winningIndex = random.nextInt(animals.length);
-            String winningAnimal = animals[winningIndex];
+                    selectedAnimal = null;
+                    animalCards.forEach(c => c.classList.remove('selected'));
 
-            System.out.println("The winning animal is: " + winningAnimal);
-            System.out.println("----------------------------------------");
-
-            if (userAnimal.equalsIgnoreCase(winningAnimal)) {
-                int winnings = (int) (betAmount * multiplier);
-                currentPoints += winnings;
-                System.out.println("Congratulations! You WON " + winnings + " points!");
-            } else {
-                currentPoints -= betAmount;
-                System.out.println("Oh no! You lost " + betAmount + " points. Better luck next time!");
-            }
-
-            System.out.println("Your new points: " + currentPoints);
-
-            if (currentPoints <= 0) {
-                System.out.println("\n----------------------------------------");
-                System.out.println("Game Over! You have no more points.");
-                System.out.println("----------------------------------------");
-                break;
-            }
-
-            System.out.print("\nDo you want to play again? (yes/no): ");
-            String playAgain = scanner.nextLine();
-            if (!playAgain.equalsIgnoreCase("yes")) {
-                System.out.println("Thank you for playing! Final Points: " + currentPoints);
-                break;
-            }
-        }
-        scanner.close();
-    }
-}
+                }, 2000); // 2 second delay to simulate spinning
+            });
+        });
+    </script>
+</body>
+</html>
