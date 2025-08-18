@@ -1,353 +1,106 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Zoo Roulette (Board Style) + Result Checker</title>
-<style>
-  :root{
-    --bg:#0f1220; --card:#171a2b; --accent:#f7c843; --accent2:#19c37d; --muted:#9aa3b2; --text:#ecf1ff; --line:#2a2f52;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
-  .wrap{max-width:1180px;margin:0 auto;padding:16px}
-  .card{background:#151a2d;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.25);padding:16px;margin:12px 0}
-  h1,h2{margin:8px 0 12px}
-  .muted{color:var(--muted)}
+import java.util.InputMismatchException;
+import java.util.Random;
+import java.util.Scanner;
 
-  /* ======== BOARD STYLE ZOO ROULETTE ======== */
-  .zr-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
-  .balance{font-size:18px;font-weight:800}
-  .chips{display:flex;gap:8px;flex-wrap:wrap}
-  .chip{padding:10px 14px;border-radius:999px;background:#22284b;border:1px solid var(--line);color:#fff;cursor:pointer;font-weight:800}
-  .chip.active{outline:2px solid var(--accent)}
+public class VisualZooRoulette {
 
-  .zr-layout{display:grid;grid-template-columns:260px 1fr 240px;gap:14px}
-  @media(max-width:980px){.zr-layout{grid-template-columns:1fr}}
+    public static void main(String[] args) {
+        System.out.println("----------------------------------------");
+        System.out.println("     Welcome to ZOO ROULETTE (Visual)     ");
+        System.out.println("----------------------------------------");
 
-  .panel{background:#10162b;border:1px solid var(--line);border-radius:12px;padding:12px}
+        int currentPoints = 5000;
+        
+        // Animals and their multipliers as shown in the image
+        String[] animals = {"Monkey", "Rabbit", "Pigeon", "Peacock", "Lion", "Shark", "Eagle"};
+        double[] multipliers = {2.0, 6.0, 8.0, 12.0, 12.0, 24.0, 8.0};
 
-  /* Record panel */
-  .history{max-height:520px;overflow:auto}
-  .history table{width:100%;border-collapse:collapse}
-  .history th,.history td{padding:8px;border-bottom:1px solid #20274a;font-size:13px;text-align:left}
-  .history tr.win{background:#0f2b1f}
-  .history tr.lose{background:#2a1717}
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
 
-  /* Board grid */
-  .board-wrap{position:relative}
-  .stop-banner{position:absolute;left:50%;top:-10px;transform:translateX(-50%);background:#f7c843;color:#231; padding:6px 12px;border-radius:999px;font-weight:800;box-shadow:0 4px 12px rgba(0,0,0,.25)}
-  .board{display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(4,90px);gap:8px;padding:10px;background:#0e142a;border:1px solid var(--line);border-radius:12px}
-  .cell{background:#1a2140;border:1px solid #26305a;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;position:relative;color:#e7edff;font-weight:800}
-  .cell .mult{font-size:12px;color:#ffd54f}
-  .cell .badge{position:absolute;right:6px;bottom:6px;background:#0009;padding:2px 6px;border-radius:999px;font-size:11px}
-  .cell.active{outline:3px solid #66d9ef;box-shadow:0 0 10px #66d9ef80}
-  .cell.bet{background:#242c59}
-  .centerbox{grid-column:3/5;grid-row:2/4;background:#10162b;border:2px dashed #31407a;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#cbd6ff}
+        while (currentPoints > 0) {
+            System.out.println("\n----------------------------------------");
+            System.out.println("Current Points: " + currentPoints);
+            System.out.println("Place your bet on an animal:");
+            
+            // Displaying the animals in a grid-like fashion
+            System.out.println("1. Monkey (x" + multipliers[0] + ") | 2. Rabbit (x" + multipliers[1] + ") | 3. Pigeon (x" + multipliers[2] + ")");
+            System.out.println("4. Peacock (x" + multipliers[3] + ") | 5. Lion (x" + multipliers[4] + ") | 6. Shark (x" + multipliers[5] + ")");
+            System.out.println("7. Eagle (x" + multipliers[6] + ")");
 
-  /* Right controls */
-  .right .btn{width:100%;padding:12px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:900;margin:6px 0}
-  .btn.spin{background:#19c37d;color:#02150c}
-  .btn.clear{background:#2b2f55;color:#cfe3ff}
-  .status{margin-top:8px;font-weight:700}
+            int userChoice = 0;
+            int betAmount = 0;
 
-  /* Result Checker */
-  .rc label{display:block;text-align:left;margin:6px 0 4px}
-  .rc select,.rc input{width:100%;padding:10px;border-radius:10px;border:1px solid var(--line);background:#0f1430;color:#e9eeff}
-  .rc .grid{display:grid;gap:10px;grid-template-columns:repeat(3,1fr)}
-  @media(max-width:900px){.rc .grid{grid-template-columns:1fr}}
-  iframe{width:100%;height:520px;border:0;border-radius:12px;background:#0b0f24}
-</style>
-</head>
-<body>
-  <div class="wrap">
-    <div class="card">
-      <h1>Zoo Roulette — Free Mode (Board Style)</h1>
-      <div class="zr-top">
-        <div class="balance">💰 Balance: <span id="bal">5000</span> chips</div>
-        <div class="chips" id="chipsRow"></div>
-      </div>
+            try {
+                System.out.print("Enter your choice (1-" + animals.length + "): ");
+                userChoice = scanner.nextInt();
+                if (userChoice < 1 || userChoice > animals.length) {
+                    System.out.println("Invalid choice. Please select a valid number.");
+                    continue;
+                }
 
-      <div class="zr-layout">
-        <!-- Left: History -->
-        <div class="panel history">
-          <h3 style="margin:6px 0 10px">Record</h3>
-          <table>
-            <thead><tr><th>#</th><th>Result</th><th>x</th><th>Win</th><th>Bal</th></tr></thead>
-            <tbody id="histBody"></tbody>
-          </table>
-        </div>
+                System.out.print("Enter your bet amount (min 20): ");
+                betAmount = scanner.nextInt();
+                if (betAmount < 20) {
+                    System.out.println("Bet must be 20 or more.");
+                    continue;
+                }
+                if (betAmount > currentPoints) {
+                    System.out.println("You can't bet more points than you have. Your points: " + currentPoints);
+                    continue;
+                }
 
-        <!-- Center: Board -->
-        <div class="panel board-wrap">
-          <div class="stop-banner" id="banner">Stop betting</div>
-          <div id="board" class="board"></div>
-        </div>
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter a number.");
+                scanner.nextLine(); // Clear the invalid input from scanner
+                continue;
+            }
 
-        <!-- Right: Controls -->
-        <div class="panel right">
-          <h3 style="margin:6px 0">Place Your Bets</h3>
-          <div class="muted" style="margin-bottom:8px">Select a chip and tap any animal to add bet. Panda se animation start hoti hai.</div>
-          <button id="spinBtn" class="btn spin">SPIN</button>
-          <button id="clearBtn" class="btn clear">Clear Bets</button>
-          <div class="status" id="status">No bet placed.</div>
-        </div>
-      </div>
-    </div>
+            scanner.nextLine(); // Consume the newline character
 
-    <!-- ================= Result Checker ================= -->
-    <div class="card rc">
-      <h2>Board Result Checker</h2>
-      <div class="grid">
-        <div>
-          <label>Class</label>
-          <select id="classSelect">
-            <option value="">— Select Class —</option>
-            <option>9th</option>
-            <option>10th</option>
-            <option>11th</option>
-            <option>12th</option>
-          </select>
-        </div>
-        <div>
-          <label>Province / Region</label>
-          <select id="provSelect"></select>
-        </div>
-        <div>
-          <label>Board</label>
-          <select id="boardSelect"></select>
-        </div>
-      </div>
-      <div class="grid" style="grid-template-columns:2fr 1fr">
-        <div>
-          <label>Roll Number</label>
-          <input id="rollInput" placeholder="Enter Roll Number" />
-        </div>
-        <div style="align-self:end">
-          <button id="openBtn" class="btn spin" style="width:100%">Open Official Page</button>
-        </div>
-      </div>
-      <iframe id="resultFrame" title="Official Result Page"></iframe>
-    </div>
-  </div>
+            String userAnimal = animals[userChoice - 1];
+            double multiplier = multipliers[userChoice - 1];
+            System.out.println("\nYou chose: " + userAnimal);
+            System.out.println("You bet: " + betAmount + " points.");
+            System.out.println("Roulette wheel is spinning...");
 
-<script>
-/********************
- * BOARD-STYLE ZOO ROULETTE
- ********************/
-// Animals and multipliers (exactly as requested)
-const ANIMALS = [
-  {name:'Eagle', mult:12},
-  {name:'Lion', mult:12},
-  {name:'Pigeon', mult:8},
-  {name:'Peacock', mult:8},
-  {name:'Monkey', mult:8},
-  {name:'Panda', mult:8},
-  {name:'Swallow', mult:6},
-  {name:'Rabbit', mult:6},
-  {name:'Shark', mult:24}
-];
+            try {
+                Thread.sleep(2000); // Simulate spinning
+            } catch (InterruptedException e) {
+                // Ignore
+            }
 
-// Chip values like real game
-const CHIP_VALUES = [2,5,10,20,50,100];
-let currentChip = CHIP_VALUES[2]; // default 10
-let balance = 5000;
-let bets = {}; // animalName -> amount
-let spinning = false;
-let historyCount = 0;
+            int winningIndex = random.nextInt(animals.length);
+            String winningAnimal = animals[winningIndex];
 
-const balEl = document.getElementById('bal');
-const chipsRow = document.getElementById('chipsRow');
-const boardEl = document.getElementById('board');
-const statusEl = document.getElementById('status');
-const histBody = document.getElementById('histBody');
-const banner = document.getElementById('banner');
+            System.out.println("The winning animal is: " + winningAnimal);
+            System.out.println("----------------------------------------");
 
-// Build chips row
-CHIP_VALUES.forEach(v=>{
-  const b = document.createElement('button');
-  b.className = 'chip' + (v===currentChip?' active':'');
-  b.textContent = v;
-  b.onclick = ()=>{ currentChip=v; [...chipsRow.children].forEach(x=>x.classList.remove('active')); b.classList.add('active'); };
-  chipsRow.appendChild(b);
-});
+            if (userAnimal.equalsIgnoreCase(winningAnimal)) {
+                int winnings = (int) (betAmount * multiplier);
+                currentPoints += winnings;
+                System.out.println("Congratulations! You WON " + winnings + " points!");
+            } else {
+                currentPoints -= betAmount;
+                System.out.println("Oh no! You lost " + betAmount + " points. Better luck next time!");
+            }
 
-// ===== Grid structure =====
-const ROWS=4, COLS=6;
-const totalPerimeter = (COLS*2 + (ROWS-2)*2); // 20 cells
+            System.out.println("Your new points: " + currentPoints);
 
-// Build grid cells (auto-placement with a 2x2 center hole for display)
-const cells = []; // store DOM with r,c
-for(let r=0;r<ROWS;r++){
-  for(let c=0;c<COLS;c++){
-    if(r>=1 && r<=2 && c>=2 && c<=3){
-      if(r===1 && c===2){
-        const center = document.createElement('div');
-        center.className='centerbox';
-        center.innerHTML = '<h2>Zoo Roulette</h2><div class="muted">Free mode — no real money</div>';
-        boardEl.appendChild(center);
-      }
-      continue; // skip 2x2 center
+            if (currentPoints <= 0) {
+                System.out.println("\n----------------------------------------");
+                System.out.println("Game Over! You have no more points.");
+                System.out.println("----------------------------------------");
+                break;
+            }
+
+            System.out.print("\nDo you want to play again? (yes/no): ");
+            String playAgain = scanner.nextLine();
+            if (!playAgain.equalsIgnoreCase("yes")) {
+                System.out.println("Thank you for playing! Final Points: " + currentPoints);
+                break;
+            }
+        }
+        scanner.close();
     }
-    const cell = document.createElement('div');
-    cell.className='cell';
-    boardEl.appendChild(cell);
-    cells.push({el:cell,r,c});
-  }
 }
-
-// Helper to get perimeter order clockwise starting at top-left and moving right
-function perimeterOrder(rows, cols){
-  const list=[];
-  for(let c=0;c<cols;c++) list.push([0,c]); // top row
-  for(let r=1;r<rows-1;r++) list.push([r,cols-1]); // right col
-  for(let c=cols-1;c>=0;c--) list.push([rows-1,c]); // bottom row
-  for(let r=rows-2;r>0;r--) list.push([r,0]); // left col
-  return list;
-}
-const path = perimeterOrder(ROWS,COLS); // length 20
-
-// Map grid positions to actual DOM cell index (because we skipped center cells)
-function findCellDomIndex(r,c){
-  let idx=-1, k=0;
-  for(let rr=0; rr<ROWS; rr++){
-    for(let cc=0; cc<COLS; cc++){
-      if(rr>=1 && rr<=2 && cc>=2 && cc<=3) continue;
-      if(rr===r && cc===c) { idx=k; return idx; }
-      k++;
-    }
-  }
-  return idx;
-}
-
-// Sequence of animals along perimeter starting from PANDA index
-const startName = 'Panda';
-const orderedOnce = (()=>{
-  const i = ANIMALS.findIndex(a=>a.name===startName);
-  return [...ANIMALS.slice(i), ...ANIMALS.slice(0,i)];
-})();
-const seq = [];
-while(seq.length < totalPerimeter){
-  for(const a of orderedOnce){ if(seq.length<totalPerimeter) seq.push(a); }
-}
-
-// Render animals on cells following path order
-const betAmounts = {}; // by index in path
-path.forEach((pos,i)=>{
-  const [r,c]=pos; const domIndex = findCellDomIndex(r,c);
-  const cell = cells[domIndex].el; const a = seq[i];
-  cell.dataset.index = i;
-  cell.dataset.name = a.name;
-  cell.innerHTML = `<div>${a.name}</div><div class="mult">x${a.mult}</div><div class="badge" id="b${i}">0</div>`;
-  betAmounts[i]=0;
-  cell.addEventListener('click', ()=> placeBet(i));
-});
-
-function placeBet(i){
-  if(spinning) return; if(balance < currentChip){ status('Not enough chips'); return; }
-  balance -= currentChip; updateBal();
-  betAmounts[i] += currentChip; document.getElementById('b'+i).textContent = betAmounts[i];
-  cells[findDomByIndex(i)].el.classList.add('bet');
-  status(`Bet +${currentChip} on ${seq[i].name}`);
-}
-
-function findDomByIndex(i){
-  // Given path index, return cells[] entry
-  const [r,c] = path[i];
-  const di = findCellDomIndex(r,c);
-  return cells[di];
-}
-
-function clearBets(){
-  if(spinning) return;
-  let refund=0; for(const i in betAmounts){ refund += betAmounts[i]; betAmounts[i]=0; const d=findDomByIndex(+i); d.el.classList.remove('bet'); document.getElementById('b'+i).textContent='0'; }
-  balance += refund; updateBal(); status('Bets cleared. Refund '+refund);
-}
-
-document.getElementById('clearBtn').onclick = clearBets;
-
-// Spin logic: highlight travels around path starting from Panda's cell (index 0)
-let currentPos = 0; // start at 0 (Panda)
-function spin(){
-  if(spinning) return; const totalStake = Object.values(betAmounts).reduce((a,b)=>a+b,0); if(totalStake<=0){ status('Place a bet first.'); return; }
-  spinning = true; banner.textContent='Spinning...'; status('Good luck!');
-
-  // Choose a random winning index
-  const winIndex = Math.floor(Math.random()*path.length);
-
-  // Animate rounds: speed decreases
-  const totalSteps = path.length*3 + winIndex; // 3 laps + offset to land on winIndex
-  let step=0; let delay=80; // ms, increases
-
-  const tick = ()=>{
-    // remove previous highlight
-    findDomByIndex(currentPos).el.classList.remove('active');
-    currentPos = (currentPos+1)%path.length;
-    findDomByIndex(currentPos).el.classList.add('active');
-    step++;
-    // slow down towards the end
-    if(step>path.length*2) delay += 12;
-    if(step>path.length*2.6) delay += 16;
-
-    if(step<totalSteps){ setTimeout(tick, delay); }
-    else { setTimeout(()=>finish(winIndex), 220); }
-  };
-  setTimeout(tick, delay);
-}
-
-document.getElementById('spinBtn').onclick = spin;
-
-function finish(winIndex){
-  const winner = seq[winIndex];
-  // Compute win: only winning cell pays (bet * multiplier)
-  const winAmount = (betAmounts[winIndex]||0) * winner.mult;
-  balance += winAmount; updateBal();
-
-  // History entry
-  historyCount++;
-  const tr = document.createElement('tr');
-  tr.className = winAmount>0 ? 'win' : 'lose';
-  tr.innerHTML = `<td>${historyCount}</td><td>${winner.name}</td><td>x${winner.mult}</td><td>${winAmount}</td><td>${balance}</td>`;
-  histBody.prepend(tr);
-
-  // Reset bets
-  for(const i in betAmounts){ betAmounts[i]=0; document.getElementById('b'+i).textContent='0'; findDomByIndex(+i).el.classList.remove('bet'); }
-
-  banner.textContent='Stop betting';
-  status(`Result: ${winner.name} x${winner.mult}. ${winAmount>0?('You won '+winAmount):'No win this round.'}`);
-  spinning=false;
-}
-
-function updateBal(){ balEl.textContent = balance; }
-
-/************************
- * RESULT CHECKER (PK)   *
- ************************/
-const BOARD_LINKS = {
-  Punjab: ["BISE Lahore","BISE Faisalabad","BISE Gujranwala","BISE Multan","BISE Rawalpindi","BISE Sahiwal","BISE Bahawalpur","BISE DG Khan","BISE Sargodha"],
-  Sindh: ["BIEK Karachi","BISE Hyderabad","BISE Sukkur","BISE Larkana","BISE Mirpurkhas","Aga Khan Board"],
-  KPK: ["BISE Peshawar","BISE Abbottabad","BISE Swat","BISE Kohat","BISE Mardan","BISE Dera Ismail Khan","BISE Bannu","BISE Malakand"],
-  Balochistan:["BISE Quetta"],
-  AJK:["BISE Mirpur AJK"],
-  Federal:["Federal Board Islamabad"]
-};
-const PROVS = Object.keys(BOARD_LINKS);
-const provSelect = document.getElementById('provSelect');
-provSelect.innerHTML = '<option value="">— Select Province —</option>' + PROVS.map(p=>`<option>${p}</option>`).join('');
-const boardSelect = document.getElementById('boardSelect');
-
-provSelect.addEventListener('change', ()=>{
-  const p = provSelect.value; boardSelect.innerHTML='';
-  if(!p) return;
-  BOARD_LINKS[p].forEach(b=>{ const o=document.createElement('option'); o.textContent=b; boardSelect.appendChild(o); });
-});
-
-document.getElementById('openBtn').addEventListener('click', ()=>{
-  const brd = boardSelect.value; const roll = document.getElementById('rollInput').value.trim();
-  if(!brd || !roll){ alert('Please select board and enter roll number.'); return; }
-  const q = encodeURIComponent(`${brd} result ${roll}`);
-  document.getElementById('resultFrame').src = `https://www.google.com/search?q=${q}`;
-});
-</script>
-</body>
-</html>
