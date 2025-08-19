@@ -1,254 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zoo Roulette</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #333;
-            color: #eee;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .game-container {
-            background: #222;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            max-width: 600px;
-            width: 90%;
-        }
-
-        .header {
-            font-size: 24px;
-            font-weight: bold;
-            color: #ffcc00;
-            margin-bottom: 20px;
-        }
-
-        #points-display {
-            font-size: 28px;
-            margin-bottom: 15px;
-            color: #4CAF50;
-        }
-
-        .animal-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .animal-card {
-            background: #444;
-            padding: 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
-            position: relative;
-        }
-
-        .animal-card:hover {
-            background: #555;
-            transform: scale(1.05);
-        }
-        
-        .animal-card.selected {
-            background: #007bff;
-            transform: scale(1.1);
-        }
-
-        .animal-card .animal-name {
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .animal-card .multiplier {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            font-size: 14px;
-            color: #ffcc00;
-        }
-
-        .input-group {
-            margin-bottom: 15px;
-        }
-
-        .input-group input {
-            padding: 8px;
-            font-size: 16px;
-            width: 150px;
-            text-align: center;
-            border-radius: 5px;
-            border: 1px solid #666;
-            background: #555;
-            color: #eee;
-        }
-        
-        .buttons-group button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            background: #4CAF50;
-            color: white;
-            transition: background 0.2s;
-        }
-
-        .buttons-group button:hover {
-            background: #45a049;
-        }
-        
-        #result {
-            font-size: 20px;
-            margin-top: 20px;
-            font-weight: bold;
-        }
-
-        #winning-animal-display {
-            font-size: 24px;
-            font-weight: bold;
-            color: #ffcc00;
-            margin-top: 15px;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="game-container">
-        <div class="header">ZOO ROULETTE</div>
-        <div id="points-display">Points: 5000</div>
-
-        <div class="animal-grid">
-            <div class="animal-card" data-animal="Monkey" data-multiplier="2">
-                <span class="animal-name">Monkey</span>
-                <span class="multiplier">x2</span>
-            </div>
-            <div class="animal-card" data-animal="Rabbit" data-multiplier="6">
-                <span class="animal-name">Rabbit</span>
-                <span class="multiplier">x6</span>
-            </div>
-            <div class="animal-card" data-animal="Pigeon" data-multiplier="8">
-                <span class="animal-name">Pigeon</span>
-                <span class="multiplier">x8</span>
-            </div>
-            <div class="animal-card" data-animal="Peacock" data-multiplier="12">
-                <span class="animal-name">Peacock</span>
-                <span class="multiplier">x12</span>
-            </div>
-            <div class="animal-card" data-animal="Lion" data-multiplier="12">
-                <span class="animal-name">Lion</span>
-                <span class="multiplier">x12</span>
-            </div>
-            <div class="animal-card" data-animal="Shark" data-multiplier="24">
-                <span class="animal-name">Shark</span>
-                <span class="multiplier">x24</span>
-            </div>
-            <div class="animal-card" data-animal="Eagle" data-multiplier="8">
-                <span class="animal-name">Eagle</span>
-                <span class="multiplier">x8</span>
-            </div>
-        </div>
-
-        <div class="input-group">
-            <label for="bet-amount">Enter Bet:</label>
-            <input type="number" id="bet-amount" min="20" placeholder="Min 20">
-        </div>
-
-        <div class="buttons-group">
-            <button id="spin-button">Spin</button>
-        </div>
-
-        <div id="winning-animal-display"></div>
-        <div id="result"></div>
+<div style="border: 1px solid #ddd; padding: 20px; border-radius: 8px; max-width: 500px; margin: 20px auto; font-family: sans-serif; background-color: #f9f9f9;">
+    
+    <h3 style="text-align: center; color: #333;">Check Your Result Online</h3>
+    <p style="text-align: center; color: #666; font-size: 14px;">Please select your Board and Class to proceed.</p>
+    
+    <div style="margin-bottom: 15px;">
+        <label for="board-select" style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">1. Select Your Board:</label>
+        <select id="board-select" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <option value="">-- Choose Your Board --</option>
+            <option value="https://www.biselahore.com/">BISE Lahore</option>
+            <option value="https://biserwp.edu.pk/">BISE Rawalpindi</option>
+            <option value="https://bisegrw.edu.pk/">BISE Gujranwala</option>
+            <option value="https://web.bisemultan.edu.pk/">BISE Multan</option>
+            <option value="http://www.bisefsd.edu.pk/">BISE Faisalabad</option>
+            <option value="https://bisesargodha.edu.pk/">BISE Sargodha</option>
+            <option value="https://bisesahiwal.edu.pk/">BISE Sahiwal</option>
+            <option value="https://www.bisebwp.edu.pk/">BISE Bahawalpur</option>
+            <option value="https://www.bisedgkhan.edu.pk/">BISE D.G. Khan</option>
+            <option value="https://pbte.edu.pk/">PBTE (Technical Board)</option>
+        </select>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const pointsDisplay = document.getElementById('points-display');
-            const animalCards = document.querySelectorAll('.animal-card');
-            const betAmountInput = document.getElementById('bet-amount');
-            const spinButton = document.getElementById('spin-button');
-            const resultDisplay = document.getElementById('result');
-            const winningAnimalDisplay = document.getElementById('winning-animal-display');
+    <div style="margin-bottom: 20px;">
+        <label for="class-select" style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">2. Select Your Class:</label>
+        <select id="class-select" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <option value="9th">9th Class (Matric Part 1)</option>
+            <option value="10th">10th Class (Matric Part 2)</option>
+            <option value="11th">11th Class (Inter Part 1)</option>
+            <option value="12th">12th Class (Inter Part 2)</option>
+        </select>
+    </div>
 
-            let currentPoints = 5000;
-            let selectedAnimal = null;
-            const animals = ["Monkey", "Rabbit", "Pigeon", "Peacock", "Lion", "Shark", "Eagle"];
-            const multipliers = [2.0, 6.0, 8.0, 12.0, 12.0, 24.0, 8.0];
+    <button onclick="openResultPage()" style="width: 100%; padding: 12px; border: none; border-radius: 5px; background-color: #007bff; color: white; font-size: 16px; font-weight: bold; cursor: pointer;">
+        Check Result Now
+    </button>
 
-            function updatePointsDisplay() {
-                pointsDisplay.textContent = `Points: ${currentPoints}`;
-            }
+</div>
 
-            animalCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    animalCards.forEach(c => c.classList.remove('selected'));
-                    card.classList.add('selected');
-                    selectedAnimal = card.dataset.animal;
-                });
-            });
+<script>
+function openResultPage() {
+    // Get the selected board's URL from the dropdown
+    var boardUrl = document.getElementById("board-select").value;
 
-            spinButton.addEventListener('click', () => {
-                const betAmount = parseInt(betAmountInput.value);
-
-                if (!selectedAnimal) {
-                    resultDisplay.textContent = "Please select an animal!";
-                    return;
-                }
-                if (isNaN(betAmount) || betAmount < 20) {
-                    resultDisplay.textContent = "Bet must be 20 or more!";
-                    return;
-                }
-                if (betAmount > currentPoints) {
-                    resultDisplay.textContent = "You don't have enough points!";
-                    return;
-                }
-
-                spinButton.disabled = true;
-                resultDisplay.textContent = "Spinning...";
-
-                const winningIndex = Math.floor(Math.random() * animals.length);
-                const winningAnimal = animals[winningIndex];
-                const multiplier = multipliers[winningIndex];
-
-                setTimeout(() => {
-                    winningAnimalDisplay.textContent = `Winning Animal: ${winningAnimal}`;
-                    
-                    if (selectedAnimal === winningAnimal) {
-                        const winnings = betAmount * multiplier;
-                        currentPoints += winnings;
-                        resultDisplay.textContent = `Congratulations! You won ${winnings} points!`;
-                        resultDisplay.style.color = '#4CAF50';
-                    } else {
-                        currentPoints -= betAmount;
-                        resultDisplay.textContent = `You lost. Better luck next time!`;
-                        resultDisplay.style.color = '#f44336';
-                    }
-
-                    updatePointsDisplay();
-                    spinButton.disabled = false;
-                    
-                    if (currentPoints <= 0) {
-                        resultDisplay.textContent = "Game Over! You have no more points.";
-                        spinButton.disabled = true;
-                    }
-
-                    selectedAnimal = null;
-                    animalCards.forEach(c => c.classList.remove('selected'));
-
-                }, 2000); // 2 second delay to simulate spinning
-            });
-        });
-    </script>
-</body>
-</html>
+    // Check if a board has been selected
+    if (boardUrl) {
+        // Open the selected board's website in a new tab
+        window.open(boardUrl, '_blank');
+    } else {
+        // If no board is selected, show an alert message
+        alert("Please select your board first!");
+    }
+}
+</script>
