@@ -1,221 +1,242 @@
-<div style="border: 1px solid #ddd; padding: 20px; border-radius: 8px; max-width: 500px; margin: 20px auto; font-family: sans-serif; background-color: #f9f9f9;">
-    
-    <h3 style="text-align: center; color: #333;">Check Your Result Online</h3>
-    <p style="text-align: center; color: #666; font-size: 14px;">Please select your Board and Class to proceed.</p>
-    
-    <div style="margin-bottom: 15px;">
-        <label for="board-select" style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">1. Select Your Board:</label>
-        <select id="board-select" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-            <option value="">-- Choose Your Board --</option>
-            <option value="https://www.biselahore.com/">BISE Lahore</option>
-            <option value="https://biserwp.edu.pk/">BISE Rawalpindi</option>
-            <option value="https://bisegrw.edu.pk/">BISE Gujranwala</option>
-            <option value="https://web.bisemultan.edu.pk/">BISE Multan</option>
-            <option value="http://www.bisefsd.edu.pk/">BISE Faisalabad</option>
-            <option value="https://bisesargodha.edu.pk/">BISE Sargodha</option>
-            <option value="https://bisesahiwal.edu.pk/">BISE Sahiwal</option>
-            <option value="https://www.bisebwp.edu.pk/">BISE Bahawalpur</option>
-            <option value="https://www.bisedgkhan.edu.pk/">BISE D.G. Khan</option>
-            <option value="https://pbte.edu.pk/">PBTE (Technical Board)</option>
-        </select>
-    </div>
-
-    <div style="margin-bottom: 20px;">
-        <label for="class-select" style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">2. Select Your Class:</label>
-        <select id="class-select" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-            <option value="9th">9th Class (Matric Part 1)</option>
-            <option value="10th">10th Class (Matric Part 2)</option>
-            <option value="11th">11th Class (Inter Part 1)</option>
-            <option value="12th">12th Class (Inter Part 2)</option>
-        </select>
-    </div>
-
-    <button onclick="openResultPage()" style="width: 100%; padding: 12px; border: none; border-radius: 5px; background-color: #007bff; color: white; font-size: 16px; font-weight: bold; cursor: pointer;">
-        Check Result Now
-    </button>
-
-</div>
-
-<script>
-function openResultPage() {
-    // Get the selected board's URL from the dropdown
-    var boardUrl = document.getElementById("board-select").value;
-
-    // Check if a board has been selected
-    if (boardUrl) {
-        // Open the selected board's website in a new tab
-        window.open(boardUrl, '_blank');
-    } else {
-        // If no board is selected, show an alert message
-        alert("Please select your board first!");
-    }
-}
-</script>
 <!DOCTYPE html>
-<html lang="ur">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>10th Class Physics Important Questions</title>
-<style>
-  body { font-family: "Noto Nastaliq Urdu", serif; direction: rtl; padding: 20px; background: #f7f7f7; }
-  h1 { text-align: center; color: #333; }
-  .lesson-list, .question-list { margin: 10px 0; padding: 0; list-style: none; }
-  .lesson-list li, .question-list li { background: #fff; margin: 5px 0; padding: 10px; border-radius: 8px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-  .question-list { display: none; }
-  .back-btn { margin: 10px 0; cursor: pointer; color: blue; text-decoration: underline; display: inline-block; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Education Info Hub</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --primary: #1769ff;
+      --primary-dark: #0f4fc2;
+      --text: #1c2434;
+      --muted: #63708a;
+      --border: #dbe3f0;
+      --success: #0d8a3a;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.5;
+    }
+
+    .wrap {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .hero {
+      background: linear-gradient(110deg, #e9f0ff 0%, #f7fbff 100%);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    h1, h2, h3 { margin: 0 0 10px; }
+    p { margin: 0 0 12px; color: var(--muted); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 5px 16px rgba(11, 33, 76, 0.06);
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 6px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    select, input, textarea, button {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #c8d3e6;
+      padding: 10px;
+      font-size: 15px;
+      font-family: inherit;
+    }
+
+    textarea { min-height: 95px; resize: vertical; }
+
+    button {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover { background: var(--primary-dark); }
+
+    .link-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    .link-list a {
+      display: block;
+      text-decoration: none;
+      color: var(--primary-dark);
+      font-weight: 700;
+      padding: 10px;
+      border: 1px solid #cfe0ff;
+      border-radius: 8px;
+      background: #f8fbff;
+    }
+
+    .answer-box {
+      margin-top: 12px;
+      border-left: 4px solid var(--success);
+      background: #f1fff5;
+      border-radius: 8px;
+      padding: 10px;
+      display: none;
+      white-space: pre-wrap;
+    }
+
+    .tips {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #4e5d7a;
+    }
+  </style>
 </head>
 <body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>Education Info Hub</h1>
+      <p>Use one website to open board result pages, helpful study tools, and get instant AI-style support for student questions.</p>
+    </section>
 
-<h1>10th Class Physics Important Questions</h1>
+    <section class="grid">
+      <article class="card">
+        <h2>Check Result Online</h2>
+        <label for="board-select">Select your board</label>
+        <select id="board-select">
+          <option value="">-- Choose board --</option>
+          <option value="https://www.biselahore.com/">BISE Lahore</option>
+          <option value="https://biserwp.edu.pk/">BISE Rawalpindi</option>
+          <option value="https://bisegrw.edu.pk/">BISE Gujranwala</option>
+          <option value="https://web.bisemultan.edu.pk/">BISE Multan</option>
+          <option value="http://www.bisefsd.edu.pk/">BISE Faisalabad</option>
+          <option value="https://bisesargodha.edu.pk/">BISE Sargodha</option>
+          <option value="https://bisesahiwal.edu.pk/">BISE Sahiwal</option>
+          <option value="https://www.bisebwp.edu.pk/">BISE Bahawalpur</option>
+          <option value="https://www.bisedgkhan.edu.pk/">BISE D.G. Khan</option>
+          <option value="https://pbte.edu.pk/">PBTE</option>
+        </select>
 
-<ul class="lesson-list">
-  <li onclick="showQuestions('lesson10')">سبق 10: Simple Harmonic Motion & Waves</li>
-  <li onclick="showQuestions('lesson11')">سبق 11: Sound</li>
-  <li onclick="showQuestions('lesson12')">سبق 12: Geometrical Optics</li>
-  <li onclick="showQuestions('lesson13')">سبق 13: Electrostatics</li>
-  <li onclick="showQuestions('lesson14')">سبق 14: Current Electricity</li>
-  <li onclick="showQuestions('lesson15')">سبق 15: Electromagnetism</li>
-</ul>
+        <label for="class-select">Select class</label>
+        <select id="class-select">
+          <option value="9th">9th Class</option>
+          <option value="10th">10th Class</option>
+          <option value="11th">11th Class</option>
+          <option value="12th">12th Class</option>
+        </select>
 
-<!-- سبق 10 -->
-<div id="lesson10" class="question-list">
-  <span class="back-btn" onclick="goBack()">← سبق کی فہرست میں واپس</span>
-  <ul>
-    <li>سوال 1: سادہ ہارمک حرکت (SHM) کی تعریف کریں۔ <strong>Answer Page: 142</strong></li>
-    <li>سوال 2: ایمپلیٹیوڈ اور فریکونسی میں فرق بیان کریں۔ <strong>Answer Page: 142</strong></li>
-    <li>سوال 3: پیریڈ اور فریکوئنسی کے درمیان تعلق لکھیں۔ <strong>Answer Page: 142</strong></li>
-    <li>سوال 4: رفتار اور اسپیڈ میں فرق بیان کریں۔ <strong>Answer Page: 142</strong></li>
-    <li>سوال 5: توانائی (Potential & Kinetic) کی تعریف اور SHM میں تبدیلی بیان کریں۔ <strong>Answer Page: 142</strong></li>
-    <li>سوال 6: ریزوننس کیا ہے؟</li>
-    <li>سوال 7: میکانیکی لہروں کی اقسام بیان کریں۔</li>
-    <li>سوال 8: طول موج اور موج کی رفتار کے درمیان تعلق لکھیں۔</li>
-    <li>سوال 9: ساؤنڈ کی پیدائش اور اس کی ترسیل کیسے ہوتی ہے؟</li>
-    <li>سوال 10: آواز کی کوالٹی اور انٹینسٹی میں فرق بیان کریں۔</li>
-  </ul>
-</div>
+        <button id="result-btn">Open Result Website</button>
+      </article>
 
-<!-- سبق 11 -->
-<div id="lesson11" class="question-list">
-  <span class="back-btn" onclick="goBack()">← سبق کی فہرست میں واپس</span>
-  <ul>
-    <li>سوال 1: آواز کی لاؤڈنس سے کیا مراد ہے؟ ایک مثال دیں۔ <strong>Answer Page: 24</strong></li>
-    <li>سوال 2: آواز کی کوالٹی اور انٹینسٹی میں فرق بیان کریں۔ <strong>Answer Page: 26</strong></li>
-    <li>سوال 3: پچ اور فریکونسی میں فرق بیان کریں۔ <strong>Answer Page: 26</strong></li>
-    <li>سوال 4: زیرو بیل سے کیا مراد ہے؟ ساؤنڈ انٹینسٹی لیول کی تعریف کریں۔ <strong>Answer Page: 26</strong></li>
-    <li>سوال 5: ریفلیکشن آف ساؤنڈ سے کیا مراد ہے؟ <strong>Answer Page: 28</strong></li>
-    <li>سوال 6: وائبریٹنگ جسم کا ایمپلیٹیوڈ تبدیل ہونے سے آواز کی لاؤڈنس اور اسپیڈ پر کیا اثر پڑتا ہے؟ <strong>Answer Page: 25</strong></li>
-    <li>سوال 7: آواز کی اسپیڈ معلوم کرنے کا فارمولا لکھیں اور ہوا میں آواز کی اسپیڈ کتنی ہے؟ <strong>Answer Page: 25</strong></li>
-    <li>سوال 8: میوزیکل ساؤنڈ اور شور میں فرق بیان کریں۔ <strong>Answer Page: 25</strong></li>
-    <li>سوال 9: صوتی نگہبانی (Resonance) کی تعریف کریں۔ <strong>Answer Page: 25</strong></li>
-    <li>سوال 10: شور کے انسانی جسم پر مضر اثرات لکھیں۔ <strong>Answer Page: 32</strong></li>
-    <li>سوال 11: بازگشت (Echo) کیا ہے؟ <strong>Answer Page: 33</strong></li>
-    <li>سوال 12: قابلِ سماعت آواز کی فریکونسی کی حدود کیا ہیں اور یہ عمر کے ساتھ کیسے کم ہوتی ہیں؟ <strong>Answer Page: 34</strong></li>
-    <li>سوال 13: الٹراساؤنڈ کیا ہے؟ اس کے استعمالات لکھیں۔ <strong>Answer Page: 34</strong></li>
-    <li>سوال 14: اسٹیتھوسکوپ (Stethoscope) کیا ہے؟ <strong>Answer Page: 22</strong></li>
-    <li>سوال 15: سونار (SONAR) کی تعریف کریں۔ <strong>Answer Page: 35</strong></li>
-    <li>سوال 16: الٹرا ساؤنڈ کے استعمالات لکھیں۔ <strong>Answer Page: 35</strong></li>
-    <li>سوال 17: الٹرا ساؤنڈ سے سمندری گہرائی کیسے معلوم کی جا سکتی ہے؟ <strong>Answer Page: 35</strong></li>
-    <li>سوال 18: ایم آر آئی کیسے کام کرتا ہے؟ <strong>Answer Page: 139</strong></li>
-    <li>سوال 19: الیکٹرو میگنیٹزم کی تعریف کریں۔ <strong>Answer Page: 139</strong></li>
-    <li>سوال 20: جسم کے ایریا سے کیا مراد ہے؟ <strong>Answer Page: 139</strong></li>
-  </ul>
-</div>
+      <article class="card">
+        <h2>Extra Features (From Popular Study Sites)</h2>
+        <p>Quick access to widely used educational tools and practice platforms.</p>
+        <ul class="link-list">
+          <li><a target="_blank" rel="noopener" href="https://www.khanacademy.org/">Khan Academy - Video Lessons</a></li>
+          <li><a target="_blank" rel="noopener" href="https://quizlet.com/">Quizlet - Flashcards</a></li>
+          <li><a target="_blank" rel="noopener" href="https://www.coursera.org/">Coursera - Courses</a></li>
+          <li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/">GeeksforGeeks - Coding Practice</a></li>
+          <li><a target="_blank" rel="noopener" href="https://www.wikipedia.org/">Wikipedia - Reference Material</a></li>
+        </ul>
+      </article>
+    </section>
 
-<!-- سبق 12 -->
-<div id="lesson12" class="question-list">
-  <span class="back-btn" onclick="goBack()">← سبق کی فہرست میں واپس</span>
-  <ul>
-    <li>سوال 1: روشنی کے ریفلیکشن کے عمل کی تعریف کریں۔ <strong>Answer Page: 42</strong></li>
-    <li>سوال 2: روشنی کی ریفلیکشن کے دو قوانین بیان کریں۔ <strong>Answer Page: 42</strong></li>
-    <li>سوال 3: باقاعدہ اور بے قاعدہ ریفلیکشن میں کیا فرق ہے؟ <strong>Answer Page: 42</strong></li>
-    <li>سوال 4: سفیریکل مرر کی تعریف کریں اور اس کی کتنی اقسام ہیں۔ <strong>Answer Page: 42–43</strong></li>
-    <li>سوال 5: کنکیو اور کنویکس مرر میں فرق لکھیں۔ <strong>Answer Page: 43</strong></li>
-    <li>سوال 6: پول اور سینٹر آف کرویچر میں فرق بیان کریں۔ <strong>Answer Page: 43</strong></li>
-    <li>سوال 7: ریڈیس آف کرویچر اور پرنسپل ایکسس میں کیا فرق ہے؟ <strong>Answer Page: 43</strong></li>
-    <li>سوال 8: پرنسپل فوکس اور فوکل لینتھ میں فرق بیان کریں۔ <strong>Answer Page: 44</strong></li>
-    <li>سوال 9: ریل اور ورچوئل امیج میں فرق لکھیں۔ <strong>Answer Page: 72</strong></li>
-    <li>سوال 10: انڈیکس کی تعریف کریں اور اس کا فارمولا لکھیں۔ <strong>Answer Page: 49</strong></li>
-    <li>سوال 11: کریٹیکل اینگل کی تعریف کریں۔ <strong>Answer Page: 50</strong></li>
-    <li>سوال 12: روشنی کی ریفریکشن کی تعریف کریں اور دو قوانین لکھیں۔ <strong>Answer Page: 48</strong></li>
-    <li>سوال 13: ٹوٹل انٹرنل ریفلیکشن کی تعریف کریں۔ <strong>Answer Page: 50</strong></li>
-    <li>سوال 14: سنیل کا قانون بیان کریں اور فارمولا لکھیں۔ <strong>Answer Page: 49</strong></li>
-    <li>سوال 15: لینز پاور کی تعریف کریں اور اس کے یونٹ کی وضاحت کریں۔ <strong>Answer Page: 56</strong></li>
-    <li>سوال 16: کنورجنگ لینز اور ڈائیورجنگ لینز میں کیا فرق ہے؟ <strong>Answer Page: 55</strong></li>
-    <li>سوال 17: مرر فارمولا کیا ہے؟ <strong>Answer Page: 46</strong></li>
-    <li>سوال 18: پرزم سے کیا مراد ہے؟ <strong>Answer Page: 54</strong></li>
-    <li>سوال 19: لینز کی چار اقسام کے نام لکھیں۔ <strong>Answer Page: 55</strong></li>
-    <li>سوال 20: نقطۂ قریب اور نقطۂ بعید سے کیا مراد ہے؟ <strong>Answer Page: 70</strong></li>
-    <li>سوال 21: کیمرہ میں لینز کا استعمال بیان کریں۔ <strong>Answer Page: 62</strong></li>
-    <li>سوال 22: سادہ مائیکروسکوپ کی تعریف کریں۔ <strong>Answer Page: 64</strong></li>
-    <li>سوال 23: ٹیلی سکوپ کا کام بیان کریں۔ <strong>Answer Page: 67–69</strong></li>
-    <li>سوال 24: قریب نظری اور بعید نظری میں فرق اور نقص کیسے دور کیا جا سکتا ہے؟ <strong>Answer Page: 70–71</strong></li>
-    <li>سوال 25: لینز کی تعریف کریں اور اس کے استعمالات لکھیں۔ <strong>Answer Page: 60</strong></li>
-    <li>سوال 26: لینز کی مروجہ علامات بیان کریں۔ <strong>Answer Page: 60</strong></li>
-  </ul>
-</div>
+    <section class="card" style="margin-top: 16px;">
+      <h2>AI Auto Answer for Students</h2>
+      <p>Ask a question in simple words. The assistant gives a quick answer template and study guidance.</p>
 
-<!-- سبق 14 -->
-<div id="lesson14" class="question-list">
-  <span class="back-btn" onclick="goBack()">← سبق کی فہرست میں واپس</span>
-  <ul>
-    <li>سوال 1: کرنٹ اور اس کے یونٹ کی تعریف کریں۔ <strong>Answer Page: 106–107</strong></li>
-    <li>سوال 2: پوٹینشل ڈفرنس اور کنونشنل ڈفرنس میں فرق کریں۔ <strong>Answer Page: 109–110</strong></li>
-    <li>سوال 3: الیکٹرو موٹو فورس کے طریق، اس کا یونٹ اور مساوات لکھیں۔ <strong>Answer Page: 111</strong></li>
-    <li>سوال 4: اوہم کا قانون بیان کریں اور مساوات لکھیں۔ <strong>Answer Page: 113</strong></li>
-    <li>سوال 5: سرکٹ بریکر اور ارتھ وائر میں فرق بیان کریں۔ <strong>Answer Page: 130</strong></li>
-    <li>سوال 6: سیریز طریقہ سے جوڑے گئے ریزسٹنس کی خصوصیات بیان کریں۔ <strong>Answer Page: 117</strong></li>
-    <li>سوال 7: ٹائم پیریڈ کی تعریف کریں اور گھروں میں الیکٹرک پاور کس طرح تقسیم ہوتی ہے۔ <strong>Answer Page: 126</strong></li>
-    <li>سوال 8: ایسی کرنٹ اور ڈی سی کرنٹ میں فرق کریں۔ <strong>Answer Page: 132</strong></li>
-    <li>سوال 9: کلو واٹ کی تعریف اور فارمولا لکھیں۔ <strong>Answer Page: 125</strong></li>
-    <li>سوال 10: پیرالل طریقہ سے جوڑے گئے ریزسٹنس کی خصوصیات لکھیں۔ <strong>Answer Page: 119</strong></li>
-    <li>سوال 11: الیکٹرک پاور کی تعریف، یونٹ اور مساوات لکھیں۔ <strong>Answer Page: 124</strong></li>
-    <li>سوال 12: جول کا قانون لکھیں، مقاصد اور مساوات۔ <strong>Answer Page: 123</strong></li>
-    <li>سوال 13: اوہم اور نان اوہم کنڈکٹر کی تعریف اور مثالیں لکھیں۔ <strong>Answer Page: 114</strong></li>
-    <li>سوال 14: کنڈکٹر اور انسولیٹر میں فرق مثالوں کے ساتھ بیان کریں۔ <strong>Answer Page: 132</strong></li>
-    <li>سوال 15: الیکٹروکونڈکٹر کی تعریف اور یونٹ لکھیں۔ <strong>Answer Page: 114</strong></li>
-  </ul>
-</div>
+      <label for="subject">Subject</label>
+      <select id="subject">
+        <option value="general">General</option>
+        <option value="physics">Physics</option>
+        <option value="math">Math</option>
+        <option value="chemistry">Chemistry</option>
+        <option value="english">English</option>
+      </select>
 
-<!-- سبق 15 -->
-<div id="lesson15" class="question-list">
-  <span class="back-btn" onclick="goBack()">← سبق کی فہرست میں واپس</span>
-  <ul>
-    <li>سوال 1: فلیمنگ کے بائیں ہاتھ کا اصول بیان کریں۔ <strong>Answer Page: 142</strong></li>
-    <li>سوال 2: میگنیٹک فیلڈ کی سمت کا دھیان کیسے رکھا جا سکتا ہے؟ <strong>Answer Page: 140</strong></li>
-    <li>سوال 3: میگنیٹک فورس کو بڑھانے کے طریقے لکھیں۔ <strong>Answer Page: 142</strong></li>
-    <li>سوال 4: ڈی سی موٹر کیا ہے؟ <strong>Answer Page: 157</strong></li>
-    <li>سوال 5: ایسے جنریٹر کی تعریف کریں۔ <strong>Answer Page: 157</strong></li>
-    <li>سوال 6: الیکٹرومیگنیٹ انڈکشن کی تعریف کریں۔ <strong>Answer Page: 145</strong></li>
-    <li>سوال 7: ڈی سی موٹر میں سپلٹ رنگز کموٹیٹر کا کیا کام ہے؟ <strong>Answer Page: 145</strong></li>
-    <li>سوال 8: آرمیچر سے کیا مراد ہے؟ <strong>Answer Page: 145</strong></li>
-    <li>سوال 9: فیرادے کے الیکٹرو میگنیٹک انڈکشن سے متعلق قانون کی تعریف کریں۔ <strong>Answer Page: 145</strong></li>
-    <li>سوال 10: انڈیوسڈ EMF پر اثر انداز ہونے والے عوامل کون سے ہیں؟ <strong>Answer Page: 148</strong></li>
-    <li>سوال 11: لینز کے قانون کی تعریف کریں۔ <strong>Answer Page: 109</strong></li>
-    <li>سوال 12: میوچل انڈکشن سے کیا مراد ہے؟ <strong>Answer Page: 152</strong></li>
-    <li>سوال 13: سٹیپ اپ اور سٹیپ ڈاؤن ٹرانسفارمر سے کیا مراد ہے؟ <strong>Answer Page: 151</strong></li>
-    <li>سوال 14: ٹرانسفارمر کیسے کام کرتا ہے؟ <strong>Answer Page: 153</strong></li>
-    <li>سوال 15: ٹرانسفارمر سے کیا مراد ہے؟ <strong>Answer Page: 153</strong></li>
-    <li>سوال 16: ریلے کیا ہے اور یہ کیسے کام کرتا ہے؟ <strong>Answer Page: 155</strong></li>
-    <li>سوال 17: الیکٹرومیگنیٹ کی تعریف اور دو مثالیں دیں۔ <strong>Answer Page: 155</strong></li>
-    <li>سوال 18: MRI کیسے کام کرتا ہے؟ <strong>Answer Page: 139</strong></li>
-    <li>سوال 19: الیکٹرومیگنیٹزم کی تعریف کریں۔ <strong>Answer Page: 139</strong></li>
-  </ul>
-</div>
+      <label for="question">Your question</label>
+      <textarea id="question" placeholder="Example: What is Ohm's law and where is it used?"></textarea>
+      <button id="ai-btn">Generate Auto Answer</button>
 
-<script>
-function showQuestions(lessonId){
-  document.querySelectorAll('.lesson-list').forEach(e => e.style.display = 'none');
-  document.querySelectorAll('.question-list').forEach(e => e.style.display = 'none');
-  document.getElementById(lessonId).style.display = 'block';
-}
+      <div id="answer" class="answer-box"></div>
+      <p class="tips">Tip: This is a lightweight in-browser helper. You can still verify with your textbook or teacher for exam wording.</p>
+    </section>
+  </div>
 
-function goBack(){
-  document.querySelectorAll('.lesson-list').forEach(e => e.style.display = 'block');
-  document.querySelectorAll('.question-list').forEach(e => e.style.display = 'none');
-}
-</script>
+  <script>
+    document.getElementById('result-btn').addEventListener('click', function () {
+      const boardUrl = document.getElementById('board-select').value;
+      const className = document.getElementById('class-select').value;
 
+      if (!boardUrl) {
+        alert('Please select your board first.');
+        return;
+      }
+
+      window.open(boardUrl, '_blank');
+      console.log('Result website opened for class:', className);
+    });
+
+    function buildAutoAnswer(subject, question) {
+      const q = question.toLowerCase();
+      let keyAnswer = 'Read the topic definition, write a short explanation, then add one practical example.';
+
+      if (subject === 'physics' || q.includes('law') || q.includes('force') || q.includes('current')) {
+        keyAnswer = 'Start with the law/definition, mention formula with units, and explain one real-life use in 2 lines.';
+      } else if (subject === 'math' || q.includes('equation') || q.includes('solve')) {
+        keyAnswer = 'Write given data, apply the formula step-by-step, and add the final answer clearly with correct units.';
+      } else if (subject === 'chemistry' || q.includes('reaction') || q.includes('atom')) {
+        keyAnswer = 'Define the concept, write the balanced equation if needed, and explain why the reaction happens.';
+      } else if (subject === 'english' || q.includes('essay') || q.includes('letter')) {
+        keyAnswer = 'Use intro, main body, and conclusion. Keep grammar simple and include 2-3 relevant examples.';
+      }
+
+      return `Auto Answer Suggestion:\n${keyAnswer}\n\nPossible direct response for your question:\n"${question.trim()}" can be answered by first giving a clear definition, then 2 key points, and one short example.`;
+    }
+
+    document.getElementById('ai-btn').addEventListener('click', function () {
+      const subject = document.getElementById('subject').value;
+      const question = document.getElementById('question').value;
+      const answerBox = document.getElementById('answer');
+
+      if (!question.trim()) {
+        alert('Please type a question first.');
+        return;
+      }
+
+      answerBox.textContent = buildAutoAnswer(subject, question);
+      answerBox.style.display = 'block';
+    });
+  </script>
 </body>
 </html>
